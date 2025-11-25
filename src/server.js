@@ -60,20 +60,38 @@ app.use(express.static(path.join(__dirname, '../public')));
 // API ROUTES
 // ═══════════════════════════════════════════════════════
 
-// Import routes
-const authRoutes = require('./routes/auth');
-const hospitalRoutes = require('./routes/hospitals');
-const userRoutes = require('./routes/users');
-const patientRoutes = require('./routes/patients');
-const opdRoutes = require('./routes/opd');
-const consultationRoutes = require('./routes/consultations');
-const labRoutes = require('./routes/lab');
-const radiologyRoutes = require('./routes/radiology');
-const pharmacyRoutes = require('./routes/pharmacy');
-const billingRoutes = require('./routes/billing');
-const inventoryRoutes = require('./routes/inventory');
-const ipdRoutes = require('./routes/ipd');
-const dashboardRoutes = require('./routes/dashboard');
+// Import routes with error handling
+function safeRequire(modulePath, routeName) {
+  try {
+    return require(modulePath);
+  } catch (error) {
+    console.error(`Failed to load ${routeName} routes:`, error.message);
+    const express = require('express');
+    const router = express.Router();
+    router.all('*', (req, res) => {
+      res.status(503).json({
+        error: `${routeName} module failed to load`,
+        message: error.message,
+        hint: 'Check DATABASE_URL environment variable'
+      });
+    });
+    return router;
+  }
+}
+
+const authRoutes = safeRequire('./routes/auth', 'auth');
+const hospitalRoutes = safeRequire('./routes/hospitals', 'hospitals');
+const userRoutes = safeRequire('./routes/users', 'users');
+const patientRoutes = safeRequire('./routes/patients', 'patients');
+const opdRoutes = safeRequire('./routes/opd', 'opd');
+const consultationRoutes = safeRequire('./routes/consultations', 'consultations');
+const labRoutes = safeRequire('./routes/lab', 'lab');
+const radiologyRoutes = safeRequire('./routes/radiology', 'radiology');
+const pharmacyRoutes = safeRequire('./routes/pharmacy', 'pharmacy');
+const billingRoutes = safeRequire('./routes/billing', 'billing');
+const inventoryRoutes = safeRequire('./routes/inventory', 'inventory');
+const ipdRoutes = safeRequire('./routes/ipd', 'ipd');
+const dashboardRoutes = safeRequire('./routes/dashboard', 'dashboard');
 
 // API endpoints
 app.use('/api/v1/auth', authRoutes);
@@ -90,13 +108,14 @@ app.use('/api/v1/inventory', inventoryRoutes);
 app.use('/api/v1/ipd', ipdRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 
-// Health check endpoint
+// Health check endpoint - respond immediately without DB check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     version: '1.0.0',
     service: 'MedicarePro Hospital Management System',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    database: process.env.DATABASE_URL ? 'configured' : 'NOT CONFIGURED'
   });
 });
 
