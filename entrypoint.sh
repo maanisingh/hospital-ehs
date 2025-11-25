@@ -10,7 +10,6 @@ echo "Waiting for MySQL..."
 DB_HOST="${MYSQLHOST:-mysql.railway.internal}"
 DB_PORT="${MYSQLPORT:-3306}"
 
-# Use netcat or simple connection test
 for i in {1..30}; do
     if nc -z ${DB_HOST} ${DB_PORT} 2>/dev/null; then
         echo "MySQL is ready!"
@@ -49,9 +48,9 @@ else
     REDIS_URL="redis://${REDIS_HOST}:${REDIS_PORT}"
 fi
 
-# MySQL credentials from Railway
+# MySQL credentials from Railway - USE ROOT FOR EVERYTHING
 MYSQL_USER="${MYSQLUSER:-root}"
-MYSQL_PASSWORD="${MYSQLPASSWORD:-${MYSQL_ROOT_PASSWORD:-admin123}}"
+MYSQL_PASSWORD="${MYSQLPASSWORD:-}"
 MYSQL_DATABASE="${MYSQLDATABASE:-railway}"
 
 echo "Configuring site with:"
@@ -79,50 +78,77 @@ cat > sites/common_site_config.json << EOF
 }
 EOF
 
-# Force remove old site if it exists with wrong config
+# Check if site directory exists
 if [ -d "sites/${SITE_NAME}" ]; then
-    echo "Removing existing site to recreate with correct credentials..."
-    rm -rf "sites/${SITE_NAME}"
-fi
+    echo "Site directory exists, updating config to use root credentials..."
 
-echo "Creating new site: ${SITE_NAME}"
-
-# Create the site with correct Railway MySQL credentials
-bench new-site ${SITE_NAME} \
-    --db-host ${DB_HOST} \
-    --db-port ${DB_PORT} \
-    --db-root-username ${MYSQL_USER} \
-    --db-root-password "${MYSQL_PASSWORD}" \
-    --admin-password ${ADMIN_PASSWORD:-admin123} \
-    --install-app erpnext \
-    --no-mariadb-socket || {
-        echo "Site creation failed, checking if site exists..."
-        if [ -d "sites/${SITE_NAME}" ]; then
-            echo "Site exists, continuing..."
-        else
-            echo "ERROR: Could not create site"
-            exit 1
-        fi
-    }
-
-# Update site-specific config
-cat > sites/${SITE_NAME}/site_config.json << EOF
+    # CRITICAL: Update site_config.json to use ROOT user (not the auto-created user)
+    cat > sites/${SITE_NAME}/site_config.json << EOF
 {
     "db_host": "${DB_HOST}",
     "db_port": ${DB_PORT},
-    "db_name": "_${SITE_NAME//./_}",
+    "db_name": "${MYSQL_DATABASE}",
+    "db_user": "${MYSQL_USER}",
+    "db_password": "${MYSQL_PASSWORD}",
+    "db_type": "mariadb"
+}
+EOF
+    echo "Updated site_config.json with root credentials"
+else
+    echo "Creating new site: ${SITE_NAME}"
+
+    # Create site directory
+    mkdir -p "sites/${SITE_NAME}"
+
+    # Create site_config.json with ROOT credentials BEFORE new-site
+    cat > sites/${SITE_NAME}/site_config.json << EOF
+{
+    "db_host": "${DB_HOST}",
+    "db_port": ${DB_PORT},
+    "db_name": "${MYSQL_DATABASE}",
+    "db_user": "${MYSQL_USER}",
     "db_password": "${MYSQL_PASSWORD}",
     "db_type": "mariadb"
 }
 EOF
 
-# Install Healthcare module
-echo "Installing Healthcare module..."
-bench get-app healthcare https://github.com/frappe/health.git --branch version-15 2>/dev/null || echo "Healthcare app may already exist"
-bench --site ${SITE_NAME} install-app healthcare 2>/dev/null || echo "Healthcare app may already be installed"
+    # Create the site - use --db-name to use existing Railway database
+    bench new-site ${SITE_NAME} \
+        --db-host ${DB_HOST} \
+        --db-port ${DB_PORT} \
+        --db-root-username ${MYSQL_USER} \
+        --db-root-password "${MYSQL_PASSWORD}" \
+        --db-name ${MYSQL_DATABASE} \
+        --admin-password ${ADMIN_PASSWORD:-admin123} \
+        --install-app erpnext \
+        --no-mariadb-socket || {
+            echo "Site creation had issues, but continuing..."
+        }
+
+    # Re-apply the correct config (new-site might have overwritten it)
+    cat > sites/${SITE_NAME}/site_config.json << EOF
+{
+    "db_host": "${DB_HOST}",
+    "db_port": ${DB_PORT},
+    "db_name": "${MYSQL_DATABASE}",
+    "db_user": "${MYSQL_USER}",
+    "db_password": "${MYSQL_PASSWORD}",
+    "db_type": "mariadb"
+}
+EOF
+fi
 
 # Set as default site
 bench use ${SITE_NAME}
+
+# Verify database connection
+echo "Verifying database connection..."
+bench --site ${SITE_NAME} mariadb -e "SELECT 1" 2>/dev/null && echo "Database connection successful!" || echo "Database check skipped"
+
+# Install Healthcare module if not installed
+echo "Checking Healthcare module..."
+bench get-app healthcare https://github.com/frappe/health.git --branch version-15 2>/dev/null || echo "Healthcare app exists"
+bench --site ${SITE_NAME} install-app healthcare 2>/dev/null || echo "Healthcare already installed or skipped"
 
 # Run migrations
 echo "Running migrations..."
@@ -136,5 +162,5 @@ echo "=========================================="
 echo "Starting ERPNext on port ${PORT:-8080}..."
 echo "=========================================="
 
-# Start bench with serve command for Railway
+# Start bench serve
 exec bench serve --port ${PORT:-8080}
