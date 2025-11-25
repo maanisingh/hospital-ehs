@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedicarePro - Hospital Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Login Page -->
+    <div id="login-page" class="min-h-screen flex">
+        <!-- Left Side - Branding -->
+        <div class="hidden lg:flex lg:w-1/2 gradient-bg items-center justify-center p-12">
+            <div class="text-white text-center">
+                <div class="mb-8">
+                    <i class="fas fa-hospital text-8xl mb-4"></i>
+                </div>
+                <h1 class="text-5xl font-bold mb-4">MedicarePro</h1>
+                <p class="text-xl opacity-90 mb-8">Multi-Tenant Hospital Management System</p>
+                <div class="grid grid-cols-3 gap-6 text-center mt-12">
+                    <div>
+                        <i class="fas fa-user-md text-3xl mb-2"></i>
+                        <p class="text-sm">OPD Management</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-flask text-3xl mb-2"></i>
+                        <p class="text-sm">Lab & Radiology</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-pills text-3xl mb-2"></i>
+                        <p class="text-sm">Pharmacy</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-bed text-3xl mb-2"></i>
+                        <p class="text-sm">IPD Management</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-file-invoice-dollar text-3xl mb-2"></i>
+                        <p class="text-sm">Billing</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-boxes text-3xl mb-2"></i>
+                        <p class="text-sm">Inventory</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
+            <div class="w-full max-w-md">
+                <div class="lg:hidden text-center mb-8">
+                    <i class="fas fa-hospital text-6xl text-blue-600 mb-4"></i>
+                    <h1 class="text-3xl font-bold text-gray-800">MedicarePro</h1>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome Back</h2>
+                    <p class="text-gray-500 mb-6">Sign in to your account</p>
+
+                    <form id="login-form" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <div class="relative">
+                                <input type="email" id="email" required
+                                    class="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter your email">
+                                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password" required
+                                    class="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Enter your password">
+                                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div id="error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"></div>
+
+                        <button type="submit" id="login-btn"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <span>Sign In</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </form>
+
+                    <div class="mt-8 p-4 bg-gray-50 rounded-lg">
+                        <p class="text-sm text-gray-600 font-medium mb-2">Demo Credentials:</p>
+                        <div class="space-y-1 text-xs text-gray-500">
+                            <p><strong>Superadmin:</strong> superadmin@medicarepro.com / superadmin123</p>
+                            <p><strong>Hospital Admin:</strong> admin@h101.com / admin123</p>
+                            <p><strong>Doctor:</strong> doctor@h101.com / password123</p>
+                            <p><strong>Reception:</strong> reception@h101.com / password123</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-center text-sm text-gray-500 mt-6">
+                    © 2024 MedicarePro. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard (Hidden initially) -->
+    <div id="dashboard-page" class="hidden">
+        <!-- Top Navigation -->
+        <nav class="gradient-bg shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between items-center py-3">
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-hospital text-white text-2xl"></i>
+                        <span class="text-white font-bold text-xl">MedicarePro</span>
+                        <span id="hospital-name" class="text-white text-sm opacity-80"></span>
+                    </div>
+
+                    <!-- Top Menu Navigation -->
+                    <div class="hidden md:flex items-center space-x-1" id="main-menu">
+                        <!-- Menu items will be populated based on role -->
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <div class="text-white">
+                            <span class="text-sm opacity-80">Welcome,</span>
+                            <span id="user-name" class="font-semibold"></span>
+                        </div>
+                        <button onclick="logout()" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg flex items-center">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Dashboard Stats -->
+            <div id="dashboard-stats" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Stats cards will be populated dynamically -->
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboard-content" class="bg-white rounded-xl shadow-lg p-6">
+                <div class="text-center py-12">
+                    <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+                    <p class="text-gray-500">Loading dashboard...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE = '/api/v1';
+        let currentUser = null;
+        let authToken = null;
+
+        // Menu configuration by role
+        const menuConfig = {
+            SUPERADMIN: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-hospital', label: 'Hospitals', path: 'hospitals' },
+                { icon: 'fa-users', label: 'Users', path: 'users' }
+            ],
+            HOSPITAL_ADMIN: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-users', label: 'Users', path: 'users' },
+                { icon: 'fa-user-injured', label: 'Patients', path: 'patients' },
+                { icon: 'fa-user-md', label: 'OPD', path: 'opd' },
+                { icon: 'fa-flask', label: 'Lab', path: 'lab' },
+                { icon: 'fa-x-ray', label: 'Radiology', path: 'radiology' },
+                { icon: 'fa-pills', label: 'Pharmacy', path: 'pharmacy' },
+                { icon: 'fa-file-invoice-dollar', label: 'Billing', path: 'billing' },
+                { icon: 'fa-bed', label: 'IPD', path: 'ipd' }
+            ],
+            RECEPTION: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-user-injured', label: 'Patients', path: 'patients' },
+                { icon: 'fa-user-md', label: 'OPD', path: 'opd' }
+            ],
+            DOCTOR: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-user-md', label: 'OPD Queue', path: 'opd' },
+                { icon: 'fa-stethoscope', label: 'Consultations', path: 'consultations' },
+                { icon: 'fa-user-injured', label: 'Patients', path: 'patients' }
+            ],
+            LAB_TECHNICIAN: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-flask', label: 'Lab Queue', path: 'lab' },
+                { icon: 'fa-vial', label: 'Tests', path: 'lab/tests' }
+            ],
+            RADIOLOGY_TECHNICIAN: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-x-ray', label: 'Radiology Queue', path: 'radiology' }
+            ],
+            PHARMACIST: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-prescription', label: 'Prescriptions', path: 'pharmacy/prescriptions' },
+                { icon: 'fa-pills', label: 'Medicines', path: 'pharmacy' }
+            ],
+            BILLING_STAFF: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-file-invoice-dollar', label: 'Billing', path: 'billing' }
+            ],
+            NURSE: [
+                { icon: 'fa-tachometer-alt', label: 'Dashboard', path: 'dashboard' },
+                { icon: 'fa-bed', label: 'IPD', path: 'ipd' },
+                { icon: 'fa-user-injured', label: 'Patients', path: 'patients' }
+            ]
+        };
+
+        // Check for existing session
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+
+            if (token && user) {
+                authToken = token;
+                currentUser = JSON.parse(user);
+                showDashboard();
+            }
+        });
+
+        // Login Form Handler
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            const loginBtn = document.getElementById('login-btn');
+
+            errorDiv.classList.add('hidden');
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing in...';
+            loginBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    authToken = data.token;
+                    currentUser = data.user;
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    showDashboard();
+                } else {
+                    errorDiv.textContent = data.error || 'Login failed';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Unable to connect to server';
+                errorDiv.classList.remove('hidden');
+            } finally {
+                loginBtn.innerHTML = '<span>Sign In</span><i class="fas fa-arrow-right ml-2"></i>';
+                loginBtn.disabled = false;
+            }
+        });
+
+        // Show Dashboard
+        async function showDashboard() {
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('dashboard-page').classList.remove('hidden');
+
+            // Update user info
+            document.getElementById('user-name').textContent = currentUser.name;
+            if (currentUser.hospital) {
+                document.getElementById('hospital-name').textContent = `| ${currentUser.hospital.businessName}`;
+            }
+
+            // Build menu
+            buildMenu();
+
+            // Load dashboard data
+            await loadDashboard();
+        }
+
+        // Build Top Menu
+        function buildMenu() {
+            const menuContainer = document.getElementById('main-menu');
+            const menuItems = menuConfig[currentUser.role] || menuConfig.HOSPITAL_ADMIN;
+
+            menuContainer.innerHTML = menuItems.map(item => `
+                <button onclick="navigate('${item.path}')"
+                    class="px-4 py-2 text-white hover:bg-white hover:bg-opacity-20 rounded-lg flex items-center space-x-2 transition">
+                    <i class="fas ${item.icon}"></i>
+                    <span>${item.label}</span>
+                </button>
+            `).join('');
+        }
+
+        // Load Dashboard
+        async function loadDashboard() {
+            try {
+                const response = await fetch(`${API_BASE}/dashboard`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    renderDashboard(data.dashboard);
+                }
+            } catch (error) {
+                console.error('Dashboard error:', error);
+            }
+        }
+
+        // Render Dashboard
+        function renderDashboard(dashboard) {
+            const statsContainer = document.getElementById('dashboard-stats');
+            const contentContainer = document.getElementById('dashboard-content');
+
+            // Render stats based on role
+            if (dashboard.stats) {
+                const stats = dashboard.stats;
+                let statsHtml = '';
+
+                if (currentUser.role === 'SUPERADMIN') {
+                    statsHtml = `
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Total Hospitals</p>
+                                    <p class="text-3xl font-bold text-gray-800">${stats.totalHospitals || 0}</p>
+                                </div>
+                                <div class="bg-blue-100 p-3 rounded-full">
+                                    <i class="fas fa-hospital text-blue-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Active Hospitals</p>
+                                    <p class="text-3xl font-bold text-green-600">${stats.activeHospitals || 0}</p>
+                                </div>
+                                <div class="bg-green-100 p-3 rounded-full">
+                                    <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Total Users</p>
+                                    <p class="text-3xl font-bold text-purple-600">${stats.totalUsers || 0}</p>
+                                </div>
+                                <div class="bg-purple-100 p-3 rounded-full">
+                                    <i class="fas fa-users text-purple-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Total Patients</p>
+                                    <p class="text-3xl font-bold text-orange-600">${stats.totalPatients || 0}</p>
+                                </div>
+                                <div class="bg-orange-100 p-3 rounded-full">
+                                    <i class="fas fa-user-injured text-orange-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    statsHtml = `
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Today's OPD</p>
+                                    <p class="text-3xl font-bold text-blue-600">${stats.todayOpdTokens || stats.todayTokens || 0}</p>
+                                </div>
+                                <div class="bg-blue-100 p-3 rounded-full">
+                                    <i class="fas fa-user-md text-blue-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Total Patients</p>
+                                    <p class="text-3xl font-bold text-green-600">${stats.totalPatients || 0}</p>
+                                </div>
+                                <div class="bg-green-100 p-3 rounded-full">
+                                    <i class="fas fa-user-injured text-green-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Today's Revenue</p>
+                                    <p class="text-3xl font-bold text-purple-600">₹${stats.todayRevenue || 0}</p>
+                                </div>
+                                <div class="bg-purple-100 p-3 rounded-full">
+                                    <i class="fas fa-rupee-sign text-purple-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow p-6 card-hover transition duration-300">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-500 text-sm">Pending Bills</p>
+                                    <p class="text-3xl font-bold text-orange-600">${stats.pendingBills || 0}</p>
+                                </div>
+                                <div class="bg-orange-100 p-3 rounded-full">
+                                    <i class="fas fa-file-invoice text-orange-600 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                statsContainer.innerHTML = statsHtml;
+            }
+
+            // Render content
+            contentContainer.innerHTML = `
+                <div class="text-center py-8">
+                    <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome to MedicarePro</h2>
+                    <p class="text-gray-500">You are logged in as <strong>${currentUser.role.replace('_', ' ')}</strong></p>
+                    ${currentUser.hospital ? `<p class="text-gray-400">Hospital: ${currentUser.hospital.businessName} (${currentUser.hospital.organizationCode})</p>` : ''}
+                    <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-user-md text-blue-500 text-2xl mb-2"></i>
+                            <p class="text-sm text-gray-600">OPD Management</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-flask text-green-500 text-2xl mb-2"></i>
+                            <p class="text-sm text-gray-600">Lab & Pathology</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-pills text-purple-500 text-2xl mb-2"></i>
+                            <p class="text-sm text-gray-600">Pharmacy</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <i class="fas fa-bed text-orange-500 text-2xl mb-2"></i>
+                            <p class="text-sm text-gray-600">IPD Management</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Navigation
+        function navigate(path) {
+            console.log('Navigate to:', path);
+            // In a full implementation, this would load different views
+            alert(`Navigation to ${path} - Full UI implementation would load this module.`);
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            authToken = null;
+            currentUser = null;
+            document.getElementById('dashboard-page').classList.add('hidden');
+            document.getElementById('login-page').classList.remove('hidden');
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+</html>
