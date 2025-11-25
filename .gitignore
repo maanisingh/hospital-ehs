@@ -33,6 +33,7 @@ coverage/
 .vscode/
 *.swp
 *.swo
+*~
 
 # OS
 .DS_Store
@@ -46,8 +47,20 @@ temp/
 # Uploads
 uploads/
 
-# Prisma
-prisma/migrations/.migration_lock.json
-
 # Railway
 .railway/
+
+# Docker
+docker-compose.override.yml
+
+# ERPNext/Frappe specific
+sites/*/private/
+sites/*/public/files/
+sites/*/logs/
+sites/*/backups/
+*.pyc
+__pycache__/
+*.pyo
+.bench
+env/
+venv/

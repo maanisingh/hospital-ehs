@@ -1,37 +1,25 @@
-# Hospital EHS - Multi-Tenant Hospital Management System
-# Production Dockerfile
+# Hospital EHS - ERPNext Healthcare
+# Multi-Tenant Hospital Management SAAS
 
-FROM node:20-alpine
+FROM frappe/erpnext:v15
 
-# Set working directory
-WORKDIR /app
+LABEL maintainer="maanisingh <maanindersinghsidhu@gmail.com>"
+LABEL description="MedicarePro Hospital Management System based on ERPNext Healthcare"
 
-# Install OpenSSL for Prisma
-RUN apk add --no-cache openssl
+# Set environment variables
+ENV FRAPPE_SITE_NAME_HEADER=hospital-ehs.railway.app
+ENV WORKERS=2
+ENV FRAPPE_PORT=8080
 
-# Copy package files
-COPY package*.json ./
-COPY prisma ./prisma/
+# Install Healthcare module
+USER frappe
+WORKDIR /home/frappe/frappe-bench
 
-# Install dependencies
-RUN npm ci --only=production
+# The Healthcare app will be installed during site creation
+# This is handled by the entrypoint script
 
-# Generate Prisma client
-RUN npx prisma generate
+# Expose ports
+EXPOSE 8080 9000
 
-# Copy application code
-COPY . .
-
-# Expose port
-EXPOSE 8000
-
-# Set environment
-ENV NODE_ENV=production
-ENV PORT=8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:8000/api/health || exit 1
-
-# Start the server
-CMD ["npm", "start"]
+# Default command
+CMD ["bench", "start"]
