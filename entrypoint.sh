@@ -78,30 +78,20 @@ cat > sites/common_site_config.json << EOF
 }
 EOF
 
-# Check if site directory exists
-if [ -d "sites/${SITE_NAME}" ]; then
-    echo "Site directory exists, updating config to use root credentials..."
+# Ensure site directory structure exists
+echo "Creating site directory structure..."
+mkdir -p "sites/${SITE_NAME}/private/files"
+mkdir -p "sites/${SITE_NAME}/public/files"
+mkdir -p "sites/${SITE_NAME}/logs"
+mkdir -p "sites/${SITE_NAME}/locks"
 
-    # CRITICAL: Update site_config.json to use ROOT user (not the auto-created user)
-    cat > sites/${SITE_NAME}/site_config.json << EOF
-{
-    "db_host": "${DB_HOST}",
-    "db_port": ${DB_PORT},
-    "db_name": "${MYSQL_DATABASE}",
-    "db_user": "${MYSQL_USER}",
-    "db_password": "${MYSQL_PASSWORD}",
-    "db_type": "mariadb"
-}
-EOF
-    echo "Updated site_config.json with root credentials"
-else
-    echo "Creating new site: ${SITE_NAME}"
+# Create empty log files
+touch "sites/${SITE_NAME}/logs/frappe.log"
+touch "sites/${SITE_NAME}/logs/web.log"
 
-    # Create site directory
-    mkdir -p "sites/${SITE_NAME}"
-
-    # Create site_config.json with ROOT credentials BEFORE new-site
-    cat > sites/${SITE_NAME}/site_config.json << EOF
+# Create site_config.json with ROOT credentials
+echo "Creating site configuration..."
+cat > sites/${SITE_NAME}/site_config.json << EOF
 {
     "db_host": "${DB_HOST}",
     "db_port": ${DB_PORT},
@@ -112,7 +102,16 @@ else
 }
 EOF
 
-    # Create the site - use --db-name to use existing Railway database
+# Check if site is already initialized (has tables in DB)
+echo "Checking if site needs initialization..."
+
+# Try to connect and check for tabDocType (core Frappe table)
+TABLES_EXIST=$(mysql -h ${DB_HOST} -P ${DB_PORT} -u ${MYSQL_USER} -p"${MYSQL_PASSWORD}" ${MYSQL_DATABASE} -e "SHOW TABLES LIKE 'tabDocType';" 2>/dev/null | grep -c tabDocType || echo "0")
+
+if [ "$TABLES_EXIST" = "0" ]; then
+    echo "Database is empty, initializing new site..."
+
+    # Create the site
     bench new-site ${SITE_NAME} \
         --db-host ${DB_HOST} \
         --db-port ${DB_PORT} \
@@ -122,7 +121,7 @@ EOF
         --admin-password ${ADMIN_PASSWORD:-admin123} \
         --install-app erpnext \
         --no-mariadb-socket || {
-            echo "Site creation had issues, but continuing..."
+            echo "Site creation had issues, continuing..."
         }
 
     # Re-apply the correct config (new-site might have overwritten it)
@@ -136,14 +135,12 @@ EOF
     "db_type": "mariadb"
 }
 EOF
+else
+    echo "Database already has tables, skipping site creation..."
 fi
 
 # Set as default site
 bench use ${SITE_NAME}
-
-# Verify database connection
-echo "Verifying database connection..."
-bench --site ${SITE_NAME} mariadb -e "SELECT 1" 2>/dev/null && echo "Database connection successful!" || echo "Database check skipped"
 
 # Install Healthcare module if not installed
 echo "Checking Healthcare module..."
