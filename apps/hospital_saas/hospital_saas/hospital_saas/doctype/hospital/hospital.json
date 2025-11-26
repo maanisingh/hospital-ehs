@@ -1,48 +1,67 @@
 {
   "actions": [],
   "allow_rename": 1,
-  "autoname": "field:hospital_name",
+  "autoname": "format:H{#####}",
   "creation": "2024-11-26 12:00:00.000000",
   "doctype": "DocType",
   "engine": "InnoDB",
   "field_order": [
     "basic_info_section",
-    "hospital_name",
-    "hospital_code",
+    "organisation_code",
+    "business_name",
     "hospital_type",
-    "column_break_1",
+    "column_break_basic",
     "status",
     "logo",
     "establishment_date",
     "contact_section",
     "email",
     "phone",
+    "helpline_number",
     "website",
-    "column_break_2",
+    "column_break_contact",
     "address_line_1",
     "address_line_2",
     "city",
     "state",
     "country",
     "pincode",
+    "owner_section",
+    "owner_name",
+    "owner_email",
+    "column_break_owner",
+    "owner_mobile",
+    "social_media_section",
+    "facebook_url",
+    "instagram_url",
+    "youtube_url",
+    "column_break_social",
+    "twitter_url",
+    "linkedin_url",
+    "branding_section",
+    "dashboard_footer_text",
+    "column_break_branding",
+    "primary_color",
+    "secondary_color",
     "registration_section",
     "registration_number",
     "license_number",
-    "column_break_3",
+    "column_break_reg",
     "license_expiry_date",
     "accreditation",
     "capacity_section",
     "total_beds",
     "icu_beds",
-    "column_break_4",
+    "column_break_capacity",
     "emergency_beds",
     "operation_theaters",
     "admin_section",
     "admin_user",
     "subscription_plan",
-    "column_break_5",
+    "column_break_admin",
     "subscription_start",
-    "subscription_end"
+    "subscription_end",
+    "subscription_status"
   ],
   "fields": [
     {
@@ -51,29 +70,32 @@
       "label": "Basic Information"
     },
     {
-      "fieldname": "hospital_name",
+      "fieldname": "organisation_code",
       "fieldtype": "Data",
       "in_list_view": 1,
-      "label": "Hospital Name",
-      "reqd": 1,
-      "unique": 1
+      "label": "Organisation Code",
+      "read_only": 1,
+      "unique": 1,
+      "description": "Auto-generated unique code (H00001, H00002...)"
     },
     {
-      "fieldname": "hospital_code",
+      "fieldname": "business_name",
       "fieldtype": "Data",
       "in_list_view": 1,
-      "label": "Hospital Code",
-      "unique": 1
+      "in_standard_filter": 1,
+      "label": "Business Name",
+      "reqd": 1
     },
     {
       "fieldname": "hospital_type",
       "fieldtype": "Select",
       "in_list_view": 1,
-      "label": "Hospital Type",
-      "options": "\nGeneral Hospital\nSpecialty Hospital\nTeaching Hospital\nClinic\nNursing Home\nDiagnostic Center\nRehabilitation Center\nMaternity Hospital\nChildren's Hospital\nPsychiatric Hospital"
+      "in_standard_filter": 1,
+      "label": "Type",
+      "options": "\nGeneral Hospital\nSpecialty Hospital\nTeaching Hospital\nClinic\nNursing Home\nDiagnostic Center\nRehabilitation Center\nMaternity Hospital\nChildren's Hospital\nPsychiatric Hospital\nPharmacy"
     },
     {
-      "fieldname": "column_break_1",
+      "fieldname": "column_break_basic",
       "fieldtype": "Column Break"
     },
     {
@@ -81,13 +103,14 @@
       "fieldname": "status",
       "fieldtype": "Select",
       "in_list_view": 1,
+      "in_standard_filter": 1,
       "label": "Status",
       "options": "Active\nInactive\nSuspended\nClosed"
     },
     {
       "fieldname": "logo",
       "fieldtype": "Attach Image",
-      "label": "Hospital Logo"
+      "label": "Logo"
     },
     {
       "fieldname": "establishment_date",
@@ -103,7 +126,8 @@
       "fieldname": "email",
       "fieldtype": "Data",
       "label": "Email",
-      "options": "Email"
+      "options": "Email",
+      "reqd": 1
     },
     {
       "fieldname": "phone",
@@ -112,18 +136,26 @@
       "options": "Phone"
     },
     {
+      "fieldname": "helpline_number",
+      "fieldtype": "Data",
+      "label": "Helpline Number",
+      "options": "Phone",
+      "description": "24x7 helpline number for patients"
+    },
+    {
       "fieldname": "website",
       "fieldtype": "Data",
       "label": "Website"
     },
     {
-      "fieldname": "column_break_2",
+      "fieldname": "column_break_contact",
       "fieldtype": "Column Break"
     },
     {
       "fieldname": "address_line_1",
       "fieldtype": "Data",
-      "label": "Address Line 1"
+      "label": "Address",
+      "reqd": 1
     },
     {
       "fieldname": "address_line_2",
@@ -133,28 +165,125 @@
     {
       "fieldname": "city",
       "fieldtype": "Data",
-      "label": "City"
+      "label": "City",
+      "reqd": 1
     },
     {
       "fieldname": "state",
       "fieldtype": "Data",
-      "label": "State/Province"
+      "label": "State",
+      "reqd": 1
     },
     {
       "fieldname": "country",
       "fieldtype": "Link",
       "label": "Country",
-      "options": "Country"
+      "options": "Country",
+      "default": "India"
     },
     {
       "fieldname": "pincode",
       "fieldtype": "Data",
-      "label": "PIN/ZIP Code"
+      "label": "Pincode",
+      "reqd": 1
+    },
+    {
+      "fieldname": "owner_section",
+      "fieldtype": "Section Break",
+      "label": "Owner Information"
+    },
+    {
+      "fieldname": "owner_name",
+      "fieldtype": "Data",
+      "label": "Owner Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "owner_email",
+      "fieldtype": "Data",
+      "label": "Owner Email",
+      "options": "Email",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_owner",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "owner_mobile",
+      "fieldtype": "Data",
+      "label": "Owner Mobile Number",
+      "options": "Phone",
+      "reqd": 1
+    },
+    {
+      "fieldname": "social_media_section",
+      "fieldtype": "Section Break",
+      "label": "Social Media",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "facebook_url",
+      "fieldtype": "Data",
+      "label": "Facebook URL"
+    },
+    {
+      "fieldname": "instagram_url",
+      "fieldtype": "Data",
+      "label": "Instagram URL"
+    },
+    {
+      "fieldname": "youtube_url",
+      "fieldtype": "Data",
+      "label": "YouTube URL"
+    },
+    {
+      "fieldname": "column_break_social",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "twitter_url",
+      "fieldtype": "Data",
+      "label": "Twitter URL"
+    },
+    {
+      "fieldname": "linkedin_url",
+      "fieldtype": "Data",
+      "label": "LinkedIn URL"
+    },
+    {
+      "fieldname": "branding_section",
+      "fieldtype": "Section Break",
+      "label": "Branding & Customization",
+      "collapsible": 1
+    },
+    {
+      "fieldname": "dashboard_footer_text",
+      "fieldtype": "Small Text",
+      "label": "Dashboard Footer Text",
+      "description": "Custom text displayed in the dashboard footer"
+    },
+    {
+      "fieldname": "column_break_branding",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "primary_color",
+      "fieldtype": "Color",
+      "label": "Primary Color",
+      "default": "#1abc9c"
+    },
+    {
+      "fieldname": "secondary_color",
+      "fieldtype": "Color",
+      "label": "Secondary Color",
+      "default": "#3498db"
     },
     {
       "fieldname": "registration_section",
       "fieldtype": "Section Break",
-      "label": "Registration & Licensing"
+      "label": "Registration & Licensing",
+      "collapsible": 1
     },
     {
       "fieldname": "registration_number",
@@ -167,7 +296,7 @@
       "label": "License Number"
     },
     {
-      "fieldname": "column_break_3",
+      "fieldname": "column_break_reg",
       "fieldtype": "Column Break"
     },
     {
@@ -183,7 +312,8 @@
     {
       "fieldname": "capacity_section",
       "fieldtype": "Section Break",
-      "label": "Capacity"
+      "label": "Capacity",
+      "collapsible": 1
     },
     {
       "default": "0",
@@ -198,7 +328,7 @@
       "label": "ICU Beds"
     },
     {
-      "fieldname": "column_break_4",
+      "fieldname": "column_break_capacity",
       "fieldtype": "Column Break"
     },
     {
@@ -216,22 +346,24 @@
     {
       "fieldname": "admin_section",
       "fieldtype": "Section Break",
-      "label": "Administration"
+      "label": "Administration & Subscription"
     },
     {
       "fieldname": "admin_user",
       "fieldtype": "Link",
       "label": "Admin User",
-      "options": "User"
+      "options": "User",
+      "description": "Primary administrator for this hospital"
     },
     {
       "fieldname": "subscription_plan",
       "fieldtype": "Select",
       "label": "Subscription Plan",
-      "options": "\nBasic\nStandard\nPremium\nEnterprise"
+      "options": "\nBasic\nStandard\nPremium\nEnterprise",
+      "default": "Basic"
     },
     {
-      "fieldname": "column_break_5",
+      "fieldname": "column_break_admin",
       "fieldtype": "Column Break"
     },
     {
@@ -243,16 +375,24 @@
       "fieldname": "subscription_end",
       "fieldtype": "Date",
       "label": "Subscription End"
+    },
+    {
+      "fieldname": "subscription_status",
+      "fieldtype": "Select",
+      "label": "Subscription Status",
+      "options": "Active\nExpired\nTrial\nSuspended",
+      "default": "Trial",
+      "read_only": 1
     }
   ],
   "image_field": "logo",
   "index_web_pages_for_search": 1,
   "links": [],
-  "modified": "2024-11-26 12:00:00.000000",
+  "modified": "2024-11-26 18:00:00.000000",
   "modified_by": "Administrator",
   "module": "Hospital SAAS",
   "name": "Hospital",
-  "naming_rule": "By fieldname",
+  "naming_rule": "Expression",
   "owner": "Administrator",
   "permissions": [
     {
@@ -282,13 +422,21 @@
     {
       "read": 1,
       "role": "Physician"
+    },
+    {
+      "read": 1,
+      "role": "Nursing User"
+    },
+    {
+      "read": 1,
+      "role": "Laboratory User"
     }
   ],
-  "quick_entry": 1,
-  "search_fields": "hospital_name,hospital_code,city",
+  "quick_entry": 0,
+  "search_fields": "business_name,organisation_code,city,owner_name",
   "sort_field": "modified",
   "sort_order": "DESC",
   "states": [],
-  "title_field": "hospital_name",
+  "title_field": "business_name",
   "track_changes": 1
 }
