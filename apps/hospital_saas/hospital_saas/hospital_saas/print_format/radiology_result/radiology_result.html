@@ -1,0 +1,490 @@
+{% set doc = doc %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            margin: 15mm;
+            size: A4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .report-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .report-header {
+            text-align: center;
+            border-bottom: 3px solid #4f46e5;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .hospital-logo {
+            max-height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .hospital-name {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #1e1b4b;
+            margin: 0;
+        }
+
+        .report-title {
+            font-size: 14pt;
+            color: #4f46e5;
+            margin: 10px 0 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Patient Info Section */
+        .patient-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-group {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #64748b;
+            font-size: 10pt;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        /* Examination Details */
+        .exam-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .exam-section h3 {
+            margin: 0 0 10px;
+            font-size: 12pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .exam-item {
+            text-align: center;
+        }
+
+        .exam-item-label {
+            font-size: 9pt;
+            opacity: 0.9;
+            margin-bottom: 3px;
+        }
+
+        .exam-item-value {
+            font-size: 11pt;
+            font-weight: 600;
+        }
+
+        /* Findings Section */
+        .findings-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 12pt;
+            font-weight: 600;
+            color: #4f46e5;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .findings-content {
+            padding: 10px;
+            background: #fafafa;
+            border-left: 4px solid #4f46e5;
+            min-height: 100px;
+        }
+
+        .findings-content p {
+            margin: 0;
+        }
+
+        /* Impression Section */
+        .impression-section {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .impression-section .section-title {
+            color: #b45309;
+            border-bottom-color: #f59e0b;
+        }
+
+        .impression-content {
+            font-weight: 500;
+        }
+
+        /* Images Section */
+        .images-section {
+            margin-bottom: 20px;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .image-item {
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .image-item img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 4px;
+        }
+
+        .image-caption {
+            font-size: 9pt;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        /* Recommendations */
+        .recommendations-section {
+            background: #ecfdf5;
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .recommendations-section .section-title {
+            color: #047857;
+            border-bottom-color: #10b981;
+        }
+
+        /* Follow-up Alert */
+        .followup-alert {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .followup-alert strong {
+            color: #dc2626;
+        }
+
+        /* Signature Section */
+        .signature-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .signature-block {
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 1px solid #333;
+            margin: 40px auto 10px;
+            width: 200px;
+        }
+
+        .signature-name {
+            font-weight: 600;
+        }
+
+        .signature-role {
+            font-size: 10pt;
+            color: #64748b;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 10pt;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .status-badge.draft {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        /* Footer */
+        .report-footer {
+            text-align: center;
+            font-size: 9pt;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+            margin-top: 30px;
+        }
+
+        .report-id {
+            font-family: monospace;
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .report-container {
+                padding: 0;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <!-- Header -->
+        <div class="report-header">
+            {% if frappe.db.get_single_value("Hospital SAAS Settings", "hospital_logo") %}
+            <img src="{{ frappe.db.get_single_value('Hospital SAAS Settings', 'hospital_logo') }}"
+                 alt="Hospital Logo" class="hospital-logo">
+            {% endif %}
+            <h1 class="hospital-name">
+                {{ frappe.db.get_single_value("Hospital SAAS Settings", "hospital_name") or "Hospital" }}
+            </h1>
+            <h2 class="report-title">Radiology Report</h2>
+        </div>
+
+        <!-- Patient Information -->
+        <div class="patient-section">
+            <div>
+                <div class="info-group">
+                    <span class="info-label">Patient Name:</span>
+                    <span class="info-value">{{ doc.patient_name }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Patient ID:</span>
+                    <span class="info-value">{{ doc.patient }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Age / Sex:</span>
+                    <span class="info-value">{{ doc.patient_age or "-" }} / {{ doc.patient_sex or "-" }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Referring Doctor:</span>
+                    <span class="info-value">{{ doc.practitioner_name or "-" }}</span>
+                </div>
+            </div>
+            <div>
+                <div class="info-group">
+                    <span class="info-label">Report No:</span>
+                    <span class="info-value">{{ doc.name }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Order No:</span>
+                    <span class="info-value">{{ doc.radiology_order or "-" }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Exam Date:</span>
+                    <span class="info-value">{{ frappe.format(doc.examination_date, {"fieldtype": "Date"}) }}</span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value">
+                        <span class="status-badge {{ doc.status.lower().replace(' ', '-') }}">
+                            {{ doc.status }}
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Examination Details -->
+        <div class="exam-section">
+            <h3>Examination Details</h3>
+            <div class="exam-grid">
+                <div class="exam-item">
+                    <div class="exam-item-label">Modality</div>
+                    <div class="exam-item-value">{{ doc.modality or "-" }}</div>
+                </div>
+                <div class="exam-item">
+                    <div class="exam-item-label">Examination Type</div>
+                    <div class="exam-item-value">{{ doc.examination_type or "-" }}</div>
+                </div>
+                <div class="exam-item">
+                    <div class="exam-item-label">Body Part</div>
+                    <div class="exam-item-value">{{ doc.body_part or "-" }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technique -->
+        {% if doc.technique %}
+        <div class="findings-section">
+            <h3 class="section-title">Technique</h3>
+            <div class="findings-content">
+                {{ doc.technique }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Findings -->
+        <div class="findings-section">
+            <h3 class="section-title">Findings</h3>
+            <div class="findings-content">
+                {{ doc.findings or "No findings documented." }}
+            </div>
+        </div>
+
+        <!-- Impression -->
+        {% if doc.impression %}
+        <div class="impression-section">
+            <h3 class="section-title">Impression / Conclusion</h3>
+            <div class="impression-content">
+                {{ doc.impression }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Comparison Study -->
+        {% if doc.comparison_study or doc.comparison_findings %}
+        <div class="findings-section">
+            <h3 class="section-title">Comparison Study</h3>
+            <div class="findings-content">
+                {% if doc.comparison_study %}
+                <p><strong>Compared with:</strong> {{ doc.comparison_study }}</p>
+                {% endif %}
+                {% if doc.comparison_findings %}
+                <p>{{ doc.comparison_findings }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Recommendations -->
+        {% if doc.recommendations %}
+        <div class="recommendations-section">
+            <h3 class="section-title">Recommendations</h3>
+            <div>
+                {{ doc.recommendations }}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Follow-up Alert -->
+        {% if doc.follow_up_required %}
+        <div class="followup-alert">
+            <strong>⚠️ Follow-up Required</strong>
+            {% if doc.follow_up_date %}
+            <br>Recommended follow-up date: {{ frappe.format(doc.follow_up_date, {"fieldtype": "Date"}) }}
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Images -->
+        {% if doc.images and doc.images|length > 0 %}
+        <div class="images-section">
+            <h3 class="section-title">Images</h3>
+            <div class="images-grid">
+                {% for image in doc.images %}
+                <div class="image-item">
+                    <img src="{{ image.image }}" alt="Radiology Image">
+                    <div class="image-caption">
+                        {{ image.view_position or "" }}
+                        {% if image.image_description %}
+                        - {{ image.image_description }}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <div class="signature-name">{{ doc.radiologist_name or "Radiologist" }}</div>
+                <div class="signature-role">Reporting Radiologist</div>
+            </div>
+            <div class="signature-block">
+                {% if doc.approved_by %}
+                <div class="signature-line"></div>
+                <div class="signature-name">{{ frappe.get_value("User", doc.approved_by, "full_name") or doc.approved_by }}</div>
+                <div class="signature-role">Approved By</div>
+                <div class="signature-role">{{ frappe.format(doc.approval_date, {"fieldtype": "Datetime"}) }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="report-footer">
+            <p>Report ID: <span class="report-id">{{ doc.name }}</span></p>
+            <p>Generated on {{ frappe.format(frappe.utils.now_datetime(), {"fieldtype": "Datetime"}) }}</p>
+            <p>This is a computer-generated report. Please verify with original records if needed.</p>
+        </div>
+    </div>
+</body>
+</html>

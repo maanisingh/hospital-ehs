@@ -1,0 +1,179 @@
+{
+  "actions": [],
+  "autoname": "field:pharmacy_name",
+  "creation": "2024-01-01 00:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "pharmacy_name",
+    "pharmacy_code",
+    "hospital",
+    "column_break_1",
+    "is_active",
+    "is_default",
+    "section_break_location",
+    "warehouse",
+    "location",
+    "column_break_2",
+    "contact_number",
+    "email",
+    "section_break_settings",
+    "auto_deduct_stock",
+    "require_prescription",
+    "column_break_3",
+    "allow_credit_sales",
+    "credit_limit"
+  ],
+  "fields": [
+    {
+      "fieldname": "pharmacy_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Pharmacy Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "pharmacy_code",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Pharmacy Code",
+      "unique": 1
+    },
+    {
+      "fieldname": "hospital",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "1",
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Is Active"
+    },
+    {
+      "default": "0",
+      "fieldname": "is_default",
+      "fieldtype": "Check",
+      "label": "Is Default Pharmacy"
+    },
+    {
+      "fieldname": "section_break_location",
+      "fieldtype": "Section Break",
+      "label": "Location & Contact"
+    },
+    {
+      "description": "Link to ERPNext Warehouse for stock management",
+      "fieldname": "warehouse",
+      "fieldtype": "Link",
+      "label": "Stock Warehouse",
+      "options": "Warehouse"
+    },
+    {
+      "fieldname": "location",
+      "fieldtype": "Small Text",
+      "label": "Location/Address"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "contact_number",
+      "fieldtype": "Data",
+      "label": "Contact Number",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "section_break_settings",
+      "fieldtype": "Section Break",
+      "label": "Settings"
+    },
+    {
+      "default": "1",
+      "description": "Automatically deduct stock when medication is dispensed",
+      "fieldname": "auto_deduct_stock",
+      "fieldtype": "Check",
+      "label": "Auto Deduct Stock"
+    },
+    {
+      "default": "1",
+      "description": "Require a valid prescription for dispensing controlled medications",
+      "fieldname": "require_prescription",
+      "fieldtype": "Check",
+      "label": "Require Prescription"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "allow_credit_sales",
+      "fieldtype": "Check",
+      "label": "Allow Credit Sales"
+    },
+    {
+      "depends_on": "eval:doc.allow_credit_sales",
+      "fieldname": "credit_limit",
+      "fieldtype": "Currency",
+      "label": "Credit Limit"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2024-01-01 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital Saas",
+  "name": "Pharmacy",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Physician"
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "pharmacy_name",
+  "track_changes": 1
+}

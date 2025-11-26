@@ -1,285 +1,571 @@
-/*
- * Hospital SAAS Custom Styles
- * 
- * Custom styling for Hospital Management System
- */
-
 /* ============================================
-   ROOT VARIABLES - Hospital Theme Colors
+   HOSPITAL SAAS - Clean Navigation Interface
    ============================================ */
+
 :root {
-    --hospital-primary: #2563eb;        /* Blue - Trust & Healthcare */
-    --hospital-primary-light: #3b82f6;
-    --hospital-primary-dark: #1d4ed8;
-    --hospital-secondary: #10b981;      /* Green - Health & Wellness */
-    --hospital-accent: #f59e0b;         /* Amber - Attention */
-    --hospital-danger: #ef4444;         /* Red - Emergency */
-    --hospital-warning: #f97316;        /* Orange - Warning */
-    --hospital-success: #22c55e;        /* Green - Success */
-    --hospital-info: #06b6d4;           /* Cyan - Information */
-    --hospital-bg-light: #f0f9ff;       /* Light blue background */
+    --hospital-primary: #1a73e8;
+    --hospital-primary-light: #4285f4;
+    --hospital-primary-dark: #0d47a1;
+    --hospital-secondary: #10b981;
+    --hospital-accent: #f59e0b;
+    --hospital-danger: #ef4444;
+    --hospital-warning: #f97316;
+    --hospital-success: #22c55e;
+    --hospital-bg-light: #f8fafc;
+    --hospital-nav-height: 56px;
 }
 
 /* ============================================
-   WORKSPACE CUSTOMIZATION
+   IMMEDIATELY HIDE DEFAULT ERPNEXT NAVBAR
+   This runs before JS loads - prevents flash
    ============================================ */
-[data-page-container="Hospital SAAS"] .workspace-sidebar-item.selected,
-.workspace-sidebar-item[data-name="Hospital SAAS"].selected {
-    background-color: var(--hospital-primary-light) !important;
-    border-left: 3px solid var(--hospital-primary-dark);
+/* Hide ERPNext default navbar globally */
+.navbar.navbar-default,
+.navbar.navbar-expand,
+header .navbar,
+.frappe-header,
+#navbar-breadcrumbs,
+.navbar-home,
+.erpnext-navbar,
+body > header.navbar,
+.navbar:not(.hospital-navbar) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
 }
 
-/* Hospital SAAS Module Cards */
-.hospital-saas-card {
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    transition: box-shadow 0.2s ease;
-}
-
-.hospital-saas-card:hover {
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-}
-
-/* ============================================
-   PATIENT-RELATED STYLES
-   ============================================ */
-.patient-card {
-    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
-    border-left: 4px solid var(--hospital-primary);
-}
-
-.patient-status-active {
-    color: var(--hospital-success);
-}
-
-.patient-status-inactive {
-    color: #9ca3af;
-}
-
-.patient-status-critical {
-    color: var(--hospital-danger);
-    font-weight: 600;
-}
-
-/* ============================================
-   APPOINTMENT STYLES
-   ============================================ */
-.appointment-scheduled {
-    background-color: #dbeafe;
-    border-left: 3px solid var(--hospital-primary);
-}
-
-.appointment-in-progress {
-    background-color: #fef3c7;
-    border-left: 3px solid var(--hospital-accent);
-}
-
-.appointment-completed {
-    background-color: #d1fae5;
-    border-left: 3px solid var(--hospital-success);
-}
-
-.appointment-cancelled {
-    background-color: #fee2e2;
-    border-left: 3px solid var(--hospital-danger);
-}
-
-/* ============================================
-   DASHBOARD STATS CARDS
-   ============================================ */
-.hospital-stat-card {
-    padding: 20px;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.hospital-stat-card .stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--hospital-primary);
-}
-
-.hospital-stat-card .stat-label {
-    font-size: 0.875rem;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.hospital-stat-card.patients {
-    border-top: 4px solid var(--hospital-primary);
-}
-
-.hospital-stat-card.appointments {
-    border-top: 4px solid var(--hospital-secondary);
-}
-
-.hospital-stat-card.revenue {
-    border-top: 4px solid var(--hospital-accent);
-}
-
-.hospital-stat-card.alerts {
-    border-top: 4px solid var(--hospital-danger);
-}
-
-/* ============================================
-   VITAL SIGNS INDICATORS
-   ============================================ */
-.vital-normal {
-    color: var(--hospital-success);
-}
-
-.vital-warning {
-    color: var(--hospital-warning);
-}
-
-.vital-critical {
-    color: var(--hospital-danger);
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-}
-
-/* ============================================
-   FORM CUSTOMIZATIONS
-   ============================================ */
-.frappe-control[data-fieldname="patient"],
-.frappe-control[data-fieldname="practitioner"] {
-    background-color: var(--hospital-bg-light);
-    border-radius: 6px;
-    padding: 8px;
-}
-
-/* Emergency/Priority Badge */
-.badge-emergency {
-    background-color: var(--hospital-danger);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-}
-
-.badge-urgent {
-    background-color: var(--hospital-warning);
-    color: white;
-}
-
-.badge-routine {
-    background-color: var(--hospital-info);
-    color: white;
-}
-
-/* ============================================
-   TIMELINE / PATIENT HISTORY
-   ============================================ */
-.patient-timeline {
-    position: relative;
-    padding-left: 30px;
-}
-
-.patient-timeline::before {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: #e5e7eb;
-}
-
-.timeline-event {
-    position: relative;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.timeline-event::before {
-    content: '';
-    position: absolute;
-    left: -24px;
-    top: 16px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--hospital-primary);
-    border: 2px solid white;
-}
-
-/* ============================================
-   QUICK ACTION BUTTONS
-   ============================================ */
-.hospital-quick-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-.hospital-quick-action.new-patient {
-    background-color: var(--hospital-primary);
-    color: white;
-}
-
-.hospital-quick-action.new-appointment {
-    background-color: var(--hospital-secondary);
-    color: white;
-}
-
-.hospital-quick-action:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* ============================================
-   MODULE HIDING (from hooks.py)
-   ============================================ */
-/* Hide non-hospital modules for cleaner interface */
-.desk-sidebar [data-doctype="Manufacturing"],
-.desk-sidebar [data-doctype="Quality"],
-.desk-sidebar [data-doctype="Projects"],
-.desk-sidebar [data-doctype="CRM"],
-.desk-sidebar [data-doctype="Buying"],
-.desk-sidebar [data-doctype="Selling"],
-.desk-sidebar [data-doctype="Assets"] {
+/* Hide sidebar immediately */
+.layout-side-section,
+.desk-sidebar,
+.sidebar-menu {
     display: none !important;
 }
 
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
-@media (max-width: 768px) {
-    .hospital-stat-card .stat-value {
-        font-size: 1.5rem;
-    }
-    
-    .hospital-quick-action {
-        padding: 8px 12px;
-        font-size: 0.875rem;
-    }
+/* Expand main content immediately */
+.layout-main-section-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+.container {
+    max-width: 100% !important;
+}
+
+/* Add padding for our navbar immediately */
+body {
+    padding-top: var(--hospital-nav-height) !important;
 }
 
 /* ============================================
-   PRINT STYLES
+   HIDE HAMBURGER MENU (3 bars) - GLOBAL
    ============================================ */
-@media print {
-    .hospital-stat-card {
-        box-shadow: none;
-        border: 1px solid #e5e7eb;
-    }
-    
-    .hospital-quick-action {
+/* Hide sidebar toggle button (hamburger) */
+.sidebar-toggle-btn,
+.btn-sidebar-toggle,
+[data-page-container] .sidebar-toggle,
+.page-head .sidebar-toggle-btn,
+.page-container .sidebar-toggle-btn,
+.btn[data-toggle="sidebar"],
+.page-head .page-head-content .sidebar-toggle-btn,
+.frappe-control .sidebar-toggle-btn,
+button.sidebar-toggle-btn,
+button.btn-sidebar-toggle,
+.layout-main .sidebar-toggle-btn,
+.col-lg-2.layout-side-section,
+.page-head .flex.align-center button:first-child:not(.primary-action):not(.btn-primary),
+[data-action="toggle-sidebar"] {
+    display: none !important;
+}
+
+/* Hide hamburger in page titles */
+.page-title .sidebar-toggle,
+.title-area .sidebar-toggle-btn,
+.page-actions .sidebar-toggle-btn {
+    display: none !important;
+}
+
+/* Ensure clean page header without hamburger */
+.page-head {
+    padding-left: 15px !important;
+}
+
+.page-head .page-head-content {
+    padding-left: 0 !important;
+}
+
+/* Remove sidebar toggle from all locations */
+.sidebar-menu-toggle,
+.toggle-sidebar,
+#sidebar-toggle {
+    display: none !important;
+}
+
+/* Body class for JS-specific features */
+body.hospital-saas-app {
+    /* JS has loaded - navbar should be visible */
+}
+
+/* ============================================
+   TOP NAVIGATION BAR
+   ============================================ */
+.hospital-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--hospital-nav-height);
+    background: linear-gradient(135deg, var(--hospital-primary) 0%, var(--hospital-primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1050;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.hospital-navbar .navbar-brand {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 30px;
+    text-decoration: none;
+}
+
+.hospital-navbar .navbar-brand:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.hospital-navbar .navbar-brand svg {
+    margin-right: 8px;
+}
+
+.hospital-navbar .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+}
+
+.hospital-navbar .nav-item {
+    padding: 8px 14px;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.hospital-navbar .nav-item:hover {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    text-decoration: none;
+}
+
+.hospital-navbar .nav-item.active {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+.hospital-navbar .nav-item svg {
+    width: 16px;
+    height: 16px;
+}
+
+.hospital-navbar .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hospital-navbar .nav-search {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    padding: 7px 14px;
+    border-radius: 20px;
+    color: white;
+    width: 180px;
+    font-size: 13px;
+}
+
+.hospital-navbar .nav-search::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.hospital-navbar .nav-search:focus {
+    outline: none;
+    background: rgba(255,255,255,0.25);
+}
+
+.hospital-navbar .user-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.hospital-navbar .user-menu:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.hospital-navbar .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* ============================================
+   DROPDOWN MENUS - FIXED HOVER BEHAVIOR
+   ============================================ */
+.hospital-dropdown {
+    position: relative;
+}
+
+.hospital-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+    min-width: 220px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    z-index: 1060;
+    margin-top: 0;
+}
+
+/* Show dropdown on hover with delay */
+.hospital-dropdown:hover .hospital-dropdown-menu,
+.hospital-dropdown-menu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Add invisible bridge to prevent gap */
+.hospital-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: transparent;
+}
+
+.hospital-dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.15s ease;
+}
+
+.hospital-dropdown-menu a:hover {
+    background: var(--hospital-bg-light);
+    color: var(--hospital-primary);
+    padding-left: 20px;
+}
+
+.hospital-dropdown-menu a svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    opacity: 0.6;
+}
+
+.hospital-dropdown-menu .divider {
+    height: 1px;
+    background: #eee;
+    margin: 6px 0;
+}
+
+.hospital-dropdown-menu .menu-header {
+    padding: 8px 16px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   QUEUE DISPLAY - INTEGRATED
+   ============================================ */
+.queue-display-page {
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: calc(100vh - var(--hospital-nav-height));
+}
+
+.queue-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.queue-header {
+    text-align: center;
+    color: white;
+    padding: 20px 0 30px;
+}
+
+.queue-header h1 {
+    font-size: 36px;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.queue-header p {
+    opacity: 0.9;
+    margin-top: 8px;
+}
+
+.queue-current-box {
+    background: white;
+    margin: 0 auto 30px;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.queue-current-box .label {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.queue-current-box .token-number {
+    font-size: 120px;
+    font-weight: bold;
+    color: var(--hospital-success);
+    line-height: 1;
+}
+
+.queue-current-box .patient-name {
+    font-size: 24px;
+    color: #333;
+    margin-top: 10px;
+}
+
+.queue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.queue-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.queue-card:hover {
+    transform: translateY(-3px);
+}
+
+.queue-card .token {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--hospital-primary);
+}
+
+.queue-card .name {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.queue-card.current {
+    background: var(--hospital-success);
+    animation: pulse 1.5s infinite;
+}
+
+.queue-card.current .token,
+.queue-card.current .name {
+    color: white;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* ============================================
+   DASHBOARD CARDS
+   ============================================ */
+.hospital-dashboard {
+    padding: 20px;
+    background: var(--hospital-bg-light);
+    min-height: calc(100vh - var(--hospital-nav-height));
+}
+
+.dashboard-header {
+    margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.dashboard-header p {
+    color: #666;
+    margin: 5px 0 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--hospital-primary);
+}
+
+.stat-card.patients { border-left-color: var(--hospital-primary); }
+.stat-card.appointments { border-left-color: var(--hospital-secondary); }
+.stat-card.tokens { border-left-color: var(--hospital-accent); }
+.stat-card.revenue { border-left-color: var(--hospital-success); }
+
+.stat-card .value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+}
+
+.stat-card .label {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.quick-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: var(--hospital-primary);
+}
+
+.quick-action-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--hospital-primary);
+}
+
+.quick-action-btn span {
+    font-weight: 500;
+}
+
+/* ============================================
+   STATUS BADGES
+   ============================================ */
+.badge-emergency {
+    background-color: var(--hospital-danger);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.badge-waiting {
+    background-color: var(--hospital-warning);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.badge-completed {
+    background-color: var(--hospital-success);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .hospital-navbar .nav-item span {
         display: none;
+    }
+    .hospital-navbar .nav-item {
+        padding: 8px 10px;
+    }
+    .hospital-navbar .nav-search {
+        width: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hospital-navbar .nav-search {
+        display: none;
+    }
+    .hospital-navbar .navbar-brand span {
+        display: none;
+    }
+    .queue-current-box .token-number {
+        font-size: 80px;
     }
 }

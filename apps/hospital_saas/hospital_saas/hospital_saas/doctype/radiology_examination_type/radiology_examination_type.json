@@ -1,0 +1,170 @@
+{
+  "actions": [],
+  "autoname": "field:examination_name",
+  "creation": "2024-11-26 20:00:00.000000",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "examination_name",
+    "examination_code",
+    "modality",
+    "column_break_1",
+    "department",
+    "body_part",
+    "is_active",
+    "section_details",
+    "description",
+    "preparation_instructions",
+    "section_pricing",
+    "rate",
+    "item",
+    "column_break_2",
+    "duration_minutes",
+    "contrast_required"
+  ],
+  "fields": [
+    {
+      "fieldname": "examination_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Examination Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "examination_code",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Examination Code",
+      "unique": 1
+    },
+    {
+      "fieldname": "modality",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Modality",
+      "options": "X-Ray\nCT Scan\nMRI\nUltrasound\nMammography\nFluoroscopy\nNuclear Medicine\nPET Scan\nDEXA Scan\nAngiography",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "department",
+      "fieldtype": "Link",
+      "label": "Department",
+      "options": "Medical Department"
+    },
+    {
+      "fieldname": "body_part",
+      "fieldtype": "Select",
+      "label": "Body Part",
+      "options": "\nHead\nNeck\nChest\nAbdomen\nPelvis\nSpine\nUpper Extremity\nLower Extremity\nWhole Body"
+    },
+    {
+      "default": "1",
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Is Active"
+    },
+    {
+      "fieldname": "section_details",
+      "fieldtype": "Section Break",
+      "label": "Details"
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Small Text",
+      "label": "Description"
+    },
+    {
+      "fieldname": "preparation_instructions",
+      "fieldtype": "Text Editor",
+      "label": "Preparation Instructions"
+    },
+    {
+      "fieldname": "section_pricing",
+      "fieldtype": "Section Break",
+      "label": "Pricing & Duration"
+    },
+    {
+      "fieldname": "rate",
+      "fieldtype": "Currency",
+      "in_list_view": 1,
+      "label": "Rate"
+    },
+    {
+      "fieldname": "item",
+      "fieldtype": "Link",
+      "label": "Linked Item",
+      "options": "Item"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "30",
+      "fieldname": "duration_minutes",
+      "fieldtype": "Int",
+      "label": "Duration (Minutes)"
+    },
+    {
+      "default": "0",
+      "fieldname": "contrast_required",
+      "fieldtype": "Check",
+      "label": "Contrast Required"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2024-11-26 20:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Radiology Examination Type",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 0,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Physician"
+    },
+    {
+      "read": 1,
+      "role": "Laboratory User"
+    }
+  ],
+  "quick_entry": 1,
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "examination_name",
+  "track_changes": 1
+}

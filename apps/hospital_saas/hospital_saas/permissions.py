@@ -9,39 +9,49 @@ import frappe
 
 def get_user_hospital():
     """Get the hospital associated with the current user"""
-    user = frappe.session.user
+    try:
+        user = frappe.session.user
 
-    if user == "Administrator":
-        return None  # Administrator can see all
+        if user == "Administrator":
+            return None  # Administrator can see all
 
-    # Check if user has a linked employee with hospital
-    employee = frappe.db.get_value(
-        "Employee",
-        {"user_id": user},
-        ["custom_hospital"],
-        as_dict=True
-    )
+        # Check if user has a linked employee with hospital
+        try:
+            employee = frappe.db.get_value(
+                "Employee",
+                {"user_id": user},
+                ["custom_hospital"],
+                as_dict=True
+            )
+            if employee and employee.get("custom_hospital"):
+                return employee.custom_hospital
+        except Exception:
+            pass
 
-    if employee and employee.get("custom_hospital"):
-        return employee.custom_hospital
+        # Check if user has hospital in User document (custom field)
+        try:
+            user_hospital = frappe.db.get_value("User", user, "custom_hospital")
+            if user_hospital:
+                return user_hospital
+        except Exception:
+            pass
 
-    # Check if user has hospital in User document (custom field)
-    user_hospital = frappe.db.get_value("User", user, "custom_hospital")
-    if user_hospital:
-        return user_hospital
+        # Check Healthcare Practitioner link
+        try:
+            practitioner = frappe.db.get_value(
+                "Healthcare Practitioner",
+                {"user_id": user},
+                ["custom_hospital"],
+                as_dict=True
+            )
+            if practitioner and practitioner.get("custom_hospital"):
+                return practitioner.custom_hospital
+        except Exception:
+            pass
 
-    # Check Healthcare Practitioner link
-    practitioner = frappe.db.get_value(
-        "Healthcare Practitioner",
-        {"user_id": user},
-        ["custom_hospital"],
-        as_dict=True
-    )
-
-    if practitioner and practitioner.get("custom_hospital"):
-        return practitioner.custom_hospital
-
-    return None
+        return None
+    except Exception:
+        return None
 
 
 def patient_query(user):
@@ -49,19 +59,22 @@ def patient_query(user):
     Permission query for Patient doctype.
     Restricts patients to their associated hospital.
     """
-    if user == "Administrator":
+    try:
+        if not user or user == "Administrator":
+            return ""
+
+        if "System Manager" in frappe.get_roles(user):
+            return ""
+
+        hospital = get_user_hospital()
+
+        if hospital:
+            escaped = frappe.db.escape(hospital)
+            return f"(`tabPatient`.`custom_hospital` = {escaped} OR `tabPatient`.`custom_hospital` IS NULL OR `tabPatient`.`custom_hospital` = '')"
+
+        return ""  # No restriction if no hospital assigned
+    except Exception:
         return ""
-
-    if "System Manager" in frappe.get_roles(user):
-        return ""
-
-    hospital = get_user_hospital()
-
-    if hospital:
-        return f"(`tabPatient`.`custom_hospital` = '{hospital}' OR `tabPatient`.`custom_hospital` IS NULL)"
-
-    # If no hospital assigned, only show unassigned patients
-    return "`tabPatient`.`custom_hospital` IS NULL"
 
 
 def appointment_query(user):
@@ -69,54 +82,89 @@ def appointment_query(user):
     Permission query for Patient Appointment doctype.
     Restricts appointments to the user's hospital.
     """
-    if user == "Administrator":
+    try:
+        if not user or user == "Administrator":
+            return ""
+
+        if "System Manager" in frappe.get_roles(user):
+            return ""
+
+        hospital = get_user_hospital()
+
+        if hospital:
+            escaped = frappe.db.escape(hospital)
+            return f"(`tabPatient Appointment`.`custom_hospital` = {escaped} OR `tabPatient Appointment`.`custom_hospital` IS NULL OR `tabPatient Appointment`.`custom_hospital` = '')"
+
         return ""
-
-    if "System Manager" in frappe.get_roles(user):
+    except Exception:
         return ""
-
-    hospital = get_user_hospital()
-
-    if hospital:
-        return f"(`tabPatient Appointment`.`custom_hospital` = '{hospital}' OR `tabPatient Appointment`.`custom_hospital` IS NULL)"
-
-    return "`tabPatient Appointment`.`custom_hospital` IS NULL"
 
 
 def encounter_query(user):
     """
     Permission query for Patient Encounter doctype.
     """
-    if user == "Administrator":
+    try:
+        if not user or user == "Administrator":
+            return ""
+
+        if "System Manager" in frappe.get_roles(user):
+            return ""
+
+        hospital = get_user_hospital()
+
+        if hospital:
+            escaped = frappe.db.escape(hospital)
+            return f"(`tabPatient Encounter`.`custom_hospital` = {escaped} OR `tabPatient Encounter`.`custom_hospital` IS NULL OR `tabPatient Encounter`.`custom_hospital` = '')"
+
         return ""
-
-    if "System Manager" in frappe.get_roles(user):
+    except Exception:
         return ""
-
-    hospital = get_user_hospital()
-
-    if hospital:
-        return f"(`tabPatient Encounter`.`custom_hospital` = '{hospital}' OR `tabPatient Encounter`.`custom_hospital` IS NULL)"
-
-    return "`tabPatient Encounter`.`custom_hospital` IS NULL"
 
 
 def lab_test_query(user):
     """
     Permission query for Lab Test doctype.
     """
-    if user == "Administrator":
+    try:
+        if not user or user == "Administrator":
+            return ""
+
+        if "System Manager" in frappe.get_roles(user):
+            return ""
+
+        hospital = get_user_hospital()
+
+        if hospital:
+            escaped = frappe.db.escape(hospital)
+            return f"(`tabLab Test`.`custom_hospital` = {escaped} OR `tabLab Test`.`custom_hospital` IS NULL OR `tabLab Test`.`custom_hospital` = '')"
+
+        return ""
+    except Exception:
         return ""
 
-    if "System Manager" in frappe.get_roles(user):
+
+def hospital_query(user):
+    """
+    Generic permission query for hospital-scoped doctypes.
+    Used for OPD Token, IPD Admission, and other hospital-specific documents.
+    """
+    try:
+        if not user or user == "Administrator":
+            return ""
+
+        if "System Manager" in frappe.get_roles(user):
+            return ""
+
+        hospital = get_user_hospital()
+
+        if hospital:
+            escaped = frappe.db.escape(hospital)
+            return f"(`hospital` = {escaped} OR `hospital` IS NULL OR `hospital` = '')"
+
         return ""
-
-    hospital = get_user_hospital()
-
-    if hospital:
-        return f"(`tabLab Test`.`custom_hospital` = '{hospital}' OR `tabLab Test`.`custom_hospital` IS NULL)"
-
-    return "`tabLab Test`.`custom_hospital` IS NULL"
+    except Exception:
+        return ""
 
 
 def has_hospital_permission(doc, user=None, permission_type=None):

@@ -1,0 +1,394 @@
+{
+    "actions": [],
+    "autoname": "format:IPD-{hospital_code}-{YY}{MM}-{###}",
+    "creation": "2024-11-26 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "admission_section",
+        "admission_id",
+        "admission_date",
+        "admission_time",
+        "column_break_1",
+        "hospital",
+        "hospital_code",
+        "status",
+        "patient_section",
+        "patient",
+        "patient_name",
+        "mobile",
+        "column_break_2",
+        "gender",
+        "age",
+        "blood_group",
+        "ward_section",
+        "admission_type",
+        "ward",
+        "room",
+        "bed",
+        "column_break_3",
+        "practitioner",
+        "department",
+        "diagnosis",
+        "emergency_section",
+        "is_emergency",
+        "emergency_contact_name",
+        "emergency_contact_mobile",
+        "column_break_4",
+        "referred_by",
+        "mlc_case",
+        "insurance_section",
+        "insurance_company",
+        "policy_number",
+        "tpa_name",
+        "column_break_5",
+        "insurance_amount",
+        "patient_amount",
+        "discharge_section",
+        "expected_discharge",
+        "actual_discharge",
+        "discharge_type",
+        "column_break_6",
+        "discharge_summary",
+        "billing_section",
+        "estimated_cost",
+        "advance_paid",
+        "column_break_7",
+        "total_billed",
+        "balance_due"
+    ],
+    "fields": [
+        {
+            "fieldname": "admission_section",
+            "fieldtype": "Section Break",
+            "label": "Admission Details"
+        },
+        {
+            "fieldname": "admission_id",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Admission ID",
+            "read_only": 1
+        },
+        {
+            "default": "Today",
+            "fieldname": "admission_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Admission Date",
+            "reqd": 1
+        },
+        {
+            "default": "Now",
+            "fieldname": "admission_time",
+            "fieldtype": "Time",
+            "label": "Admission Time"
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "hospital",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Hospital",
+            "options": "Hospital",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "hospital.hospital_code",
+            "fieldname": "hospital_code",
+            "fieldtype": "Data",
+            "label": "Hospital Code",
+            "read_only": 1
+        },
+        {
+            "default": "Admitted",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Admitted\nUnder Treatment\nDischarged\nTransferred\nExpired\nAbsconded"
+        },
+        {
+            "fieldname": "patient_section",
+            "fieldtype": "Section Break",
+            "label": "Patient Information"
+        },
+        {
+            "fieldname": "patient",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Patient",
+            "options": "Patient",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "patient.patient_name",
+            "fieldname": "patient_name",
+            "fieldtype": "Data",
+            "label": "Patient Name",
+            "read_only": 1
+        },
+        {
+            "fetch_from": "patient.mobile",
+            "fieldname": "mobile",
+            "fieldtype": "Data",
+            "label": "Mobile"
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "patient.sex",
+            "fieldname": "gender",
+            "fieldtype": "Data",
+            "label": "Gender",
+            "read_only": 1
+        },
+        {
+            "fieldname": "age",
+            "fieldtype": "Data",
+            "label": "Age"
+        },
+        {
+            "fetch_from": "patient.blood_group",
+            "fieldname": "blood_group",
+            "fieldtype": "Data",
+            "label": "Blood Group"
+        },
+        {
+            "fieldname": "ward_section",
+            "fieldtype": "Section Break",
+            "label": "Ward & Doctor"
+        },
+        {
+            "default": "Regular",
+            "fieldname": "admission_type",
+            "fieldtype": "Select",
+            "label": "Admission Type",
+            "options": "Regular\nEmergency\nDay Care\nICU\nNICU\nMaternity"
+        },
+        {
+            "fieldname": "ward",
+            "fieldtype": "Link",
+            "label": "Ward",
+            "options": "Healthcare Service Unit"
+        },
+        {
+            "fieldname": "room",
+            "fieldtype": "Data",
+            "label": "Room Number"
+        },
+        {
+            "fieldname": "bed",
+            "fieldtype": "Data",
+            "label": "Bed Number"
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "practitioner",
+            "fieldtype": "Link",
+            "label": "Primary Doctor",
+            "options": "Healthcare Practitioner",
+            "reqd": 1
+        },
+        {
+            "fieldname": "department",
+            "fieldtype": "Link",
+            "label": "Department",
+            "options": "Medical Department"
+        },
+        {
+            "fieldname": "diagnosis",
+            "fieldtype": "Small Text",
+            "label": "Provisional Diagnosis"
+        },
+        {
+            "fieldname": "emergency_section",
+            "fieldtype": "Section Break",
+            "label": "Emergency Contact"
+        },
+        {
+            "default": "0",
+            "fieldname": "is_emergency",
+            "fieldtype": "Check",
+            "label": "Emergency Case"
+        },
+        {
+            "fieldname": "emergency_contact_name",
+            "fieldtype": "Data",
+            "label": "Emergency Contact Name"
+        },
+        {
+            "fieldname": "emergency_contact_mobile",
+            "fieldtype": "Data",
+            "label": "Emergency Contact Mobile"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "referred_by",
+            "fieldtype": "Data",
+            "label": "Referred By"
+        },
+        {
+            "default": "0",
+            "fieldname": "mlc_case",
+            "fieldtype": "Check",
+            "label": "MLC Case"
+        },
+        {
+            "fieldname": "insurance_section",
+            "fieldtype": "Section Break",
+            "label": "Insurance Details"
+        },
+        {
+            "fieldname": "insurance_company",
+            "fieldtype": "Data",
+            "label": "Insurance Company"
+        },
+        {
+            "fieldname": "policy_number",
+            "fieldtype": "Data",
+            "label": "Policy Number"
+        },
+        {
+            "fieldname": "tpa_name",
+            "fieldtype": "Data",
+            "label": "TPA Name"
+        },
+        {
+            "fieldname": "column_break_5",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "0",
+            "fieldname": "insurance_amount",
+            "fieldtype": "Currency",
+            "label": "Insurance Amount"
+        },
+        {
+            "default": "0",
+            "fieldname": "patient_amount",
+            "fieldtype": "Currency",
+            "label": "Patient Payable"
+        },
+        {
+            "fieldname": "discharge_section",
+            "fieldtype": "Section Break",
+            "label": "Discharge"
+        },
+        {
+            "fieldname": "expected_discharge",
+            "fieldtype": "Date",
+            "label": "Expected Discharge"
+        },
+        {
+            "fieldname": "actual_discharge",
+            "fieldtype": "Datetime",
+            "label": "Actual Discharge"
+        },
+        {
+            "fieldname": "discharge_type",
+            "fieldtype": "Select",
+            "label": "Discharge Type",
+            "options": "\nNormal\nLAMA\nReferred\nExpired"
+        },
+        {
+            "fieldname": "column_break_6",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "discharge_summary",
+            "fieldtype": "Text Editor",
+            "label": "Discharge Summary"
+        },
+        {
+            "fieldname": "billing_section",
+            "fieldtype": "Section Break",
+            "label": "Billing"
+        },
+        {
+            "default": "0",
+            "fieldname": "estimated_cost",
+            "fieldtype": "Currency",
+            "label": "Estimated Cost"
+        },
+        {
+            "default": "0",
+            "fieldname": "advance_paid",
+            "fieldtype": "Currency",
+            "label": "Advance Paid"
+        },
+        {
+            "fieldname": "column_break_7",
+            "fieldtype": "Column Break"
+        },
+        {
+            "default": "0",
+            "fieldname": "total_billed",
+            "fieldtype": "Currency",
+            "label": "Total Billed",
+            "read_only": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "balance_due",
+            "fieldtype": "Currency",
+            "label": "Balance Due",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2024-11-26 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Hospital SAAS",
+    "name": "IPD Admission",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "print": 1,
+            "read": 1,
+            "role": "Hospital Receptionist",
+            "write": 1
+        },
+        {
+            "print": 1,
+            "read": 1,
+            "role": "Hospital Doctor",
+            "write": 1
+        },
+        {
+            "print": 1,
+            "read": 1,
+            "role": "Hospital Nurse",
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+}

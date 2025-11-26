@@ -1,0 +1,353 @@
+{
+  "actions": [],
+  "autoname": "naming_series:",
+  "creation": "2024-11-26 20:00:00.000000",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "patient",
+    "patient_name",
+    "patient_age",
+    "patient_sex",
+    "column_break_1",
+    "order_date",
+    "order_time",
+    "status",
+    "priority",
+    "section_examination",
+    "examination_type",
+    "modality",
+    "body_part",
+    "column_break_2",
+    "practitioner",
+    "practitioner_name",
+    "medical_department",
+    "section_clinical",
+    "clinical_history",
+    "reason_for_examination",
+    "section_scheduling",
+    "scheduled_date",
+    "scheduled_time",
+    "column_break_3",
+    "radiology_room",
+    "technician",
+    "section_billing",
+    "rate",
+    "invoiced",
+    "sales_invoice",
+    "section_notes",
+    "notes",
+    "amended_from"
+  ],
+  "fields": [
+    {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Series",
+      "options": "RAD-ORD-.YYYY.-",
+      "reqd": 1
+    },
+    {
+      "fieldname": "patient",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Patient",
+      "options": "Patient",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "patient.patient_name",
+      "fieldname": "patient_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Patient Name",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "patient.age",
+      "fieldname": "patient_age",
+      "fieldtype": "Data",
+      "label": "Age",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "patient.sex",
+      "fieldname": "patient_sex",
+      "fieldtype": "Data",
+      "label": "Sex",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Today",
+      "fieldname": "order_date",
+      "fieldtype": "Date",
+      "in_list_view": 1,
+      "label": "Order Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "order_time",
+      "fieldtype": "Time",
+      "label": "Order Time"
+    },
+    {
+      "default": "Ordered",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Status",
+      "options": "Ordered\nScheduled\nIn Progress\nCompleted\nCancelled",
+      "reqd": 1
+    },
+    {
+      "default": "Routine",
+      "fieldname": "priority",
+      "fieldtype": "Select",
+      "in_standard_filter": 1,
+      "label": "Priority",
+      "options": "Routine\nUrgent\nSTAT"
+    },
+    {
+      "fieldname": "section_examination",
+      "fieldtype": "Section Break",
+      "label": "Examination Details"
+    },
+    {
+      "fieldname": "examination_type",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Examination Type",
+      "options": "Radiology Examination Type",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "examination_type.modality",
+      "fieldname": "modality",
+      "fieldtype": "Data",
+      "label": "Modality",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "examination_type.body_part",
+      "fieldname": "body_part",
+      "fieldtype": "Data",
+      "label": "Body Part",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "practitioner",
+      "fieldtype": "Link",
+      "in_standard_filter": 1,
+      "label": "Ordering Practitioner",
+      "options": "Healthcare Practitioner",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "practitioner.practitioner_name",
+      "fieldname": "practitioner_name",
+      "fieldtype": "Data",
+      "label": "Practitioner Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "medical_department",
+      "fieldtype": "Link",
+      "label": "Department",
+      "options": "Medical Department"
+    },
+    {
+      "fieldname": "section_clinical",
+      "fieldtype": "Section Break",
+      "label": "Clinical Information"
+    },
+    {
+      "fieldname": "clinical_history",
+      "fieldtype": "Small Text",
+      "label": "Clinical History"
+    },
+    {
+      "fieldname": "reason_for_examination",
+      "fieldtype": "Small Text",
+      "label": "Reason for Examination"
+    },
+    {
+      "fieldname": "section_scheduling",
+      "fieldtype": "Section Break",
+      "label": "Scheduling"
+    },
+    {
+      "fieldname": "scheduled_date",
+      "fieldtype": "Date",
+      "label": "Scheduled Date"
+    },
+    {
+      "fieldname": "scheduled_time",
+      "fieldtype": "Time",
+      "label": "Scheduled Time"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "radiology_room",
+      "fieldtype": "Data",
+      "label": "Radiology Room"
+    },
+    {
+      "fieldname": "technician",
+      "fieldtype": "Link",
+      "label": "Assigned Technician",
+      "options": "Healthcare Practitioner"
+    },
+    {
+      "fieldname": "section_billing",
+      "fieldtype": "Section Break",
+      "label": "Billing"
+    },
+    {
+      "fetch_from": "examination_type.rate",
+      "fieldname": "rate",
+      "fieldtype": "Currency",
+      "label": "Rate"
+    },
+    {
+      "default": "0",
+      "fieldname": "invoiced",
+      "fieldtype": "Check",
+      "label": "Invoiced",
+      "read_only": 1
+    },
+    {
+      "fieldname": "sales_invoice",
+      "fieldtype": "Link",
+      "label": "Sales Invoice",
+      "options": "Sales Invoice",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Radiology Order",
+      "print_hide": 1,
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "is_submittable": 1,
+  "links": [
+    {
+      "link_doctype": "Radiology Result",
+      "link_fieldname": "radiology_order"
+    }
+  ],
+  "modified": "2024-11-26 20:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Radiology Order",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Physician",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Laboratory User",
+      "write": 1
+    }
+  ],
+  "search_fields": "patient_name,examination_type,status",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [
+    {
+      "color": "blue",
+      "title": "Ordered"
+    },
+    {
+      "color": "yellow",
+      "title": "Scheduled"
+    },
+    {
+      "color": "orange",
+      "title": "In Progress"
+    },
+    {
+      "color": "green",
+      "title": "Completed"
+    },
+    {
+      "color": "red",
+      "title": "Cancelled"
+    }
+  ],
+  "title_field": "patient_name",
+  "track_changes": 1
+}

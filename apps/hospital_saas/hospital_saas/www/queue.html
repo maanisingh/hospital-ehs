@@ -1,0 +1,442 @@
+{% extends "templates/web.html" %}
+
+{% block title %}OPD Queue Display{% endblock %}
+
+{% block page_content %}
+<div class="queue-display-container">
+    <!-- Header matching ERPNext style -->
+    <div class="queue-header">
+        <div class="hospital-info">
+            <h1 class="hospital-name">{{ hospital_name }}</h1>
+            <p class="queue-subtitle">OPD Queue Management System</p>
+        </div>
+        <div class="time-info">
+            <div class="current-date" id="current-date">{{ frappe.utils.today() }}</div>
+            <div class="current-time" id="current-time"></div>
+        </div>
+    </div>
+
+    <!-- Current Token Panel -->
+    <div class="row">
+        <div class="col-md-5">
+            <div class="frappe-card current-token-card">
+                <div class="card-header">
+                    <span class="indicator-pill green">NOW SERVING</span>
+                </div>
+                <div class="card-body text-center">
+                    <div class="token-number" id="current-token">---</div>
+                    <div class="patient-name" id="current-patient">Waiting for next patient</div>
+                    <div class="doctor-name text-muted" id="current-doctor"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Panel -->
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="frappe-card stat-card">
+                        <div class="stat-value" id="total-waiting">0</div>
+                        <div class="stat-label">Waiting</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="frappe-card stat-card">
+                        <div class="stat-value" id="total-completed">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="frappe-card stat-card">
+                        <div class="stat-value" id="avg-wait-time">--</div>
+                        <div class="stat-label">Avg Wait (min)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Queue List -->
+    <div class="frappe-card queue-list-card mt-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="card-title">
+                <svg class="icon icon-sm"><use href="#icon-queue-front"></use></svg>
+                Upcoming Patients
+            </h3>
+            <button class="btn btn-default btn-sm" onclick="location.reload()">
+                <svg class="icon icon-xs"><use href="#icon-refresh"></use></svg>
+                Refresh
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="queue-list" id="queue-list">
+                <div class="text-center text-muted p-4">Loading queue...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Button -->
+    <div class="fullscreen-btn">
+        <button class="btn btn-primary" onclick="toggleFullscreen()">
+            <svg class="icon icon-sm"><use href="#icon-full-screen"></use></svg>
+            Fullscreen Mode
+        </button>
+    </div>
+</div>
+
+<style>
+/* ERPNext-matching Queue Display Styles */
+.queue-display-container {
+    padding: var(--padding-xl);
+    background: var(--bg-color);
+    min-height: 100vh;
+}
+
+.queue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-lg);
+    background: var(--fg-color);
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--margin-lg);
+    box-shadow: var(--card-shadow);
+}
+
+.hospital-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.queue-subtitle {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: var(--text-md);
+}
+
+.time-info {
+    text-align: right;
+}
+
+.current-date {
+    font-size: var(--text-lg);
+    color: var(--text-color);
+}
+
+.current-time {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Token Cards */
+.frappe-card {
+    background: var(--fg-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+}
+
+.card-header {
+    padding: var(--padding-md) var(--padding-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-body {
+    padding: var(--padding-lg);
+}
+
+.card-title {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--margin-sm);
+}
+
+/* Current Token */
+.current-token-card {
+    height: 100%;
+}
+
+.current-token-card .card-body {
+    padding: var(--padding-xl);
+}
+
+.token-number {
+    font-size: 120px;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.patient-name {
+    font-size: var(--text-xl);
+    color: var(--text-color);
+    margin-top: var(--margin-md);
+}
+
+.doctor-name {
+    font-size: var(--text-md);
+    margin-top: var(--margin-sm);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Stat Cards */
+.stat-card {
+    text-align: center;
+    padding: var(--padding-lg);
+    height: 100%;
+}
+
+.stat-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: var(--text-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Queue List */
+.queue-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--margin-md);
+}
+
+.queue-item {
+    background: var(--control-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--padding-md);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.queue-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+}
+
+.queue-item .token {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.queue-item .name {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: var(--margin-xs);
+}
+
+.queue-item .status-badge {
+    margin-top: var(--margin-xs);
+}
+
+.queue-item.in-queue {
+    background: var(--yellow-50);
+    border-color: var(--yellow-500);
+}
+
+.queue-item.in-queue .token {
+    color: var(--yellow-700);
+}
+
+.queue-item.with-doctor {
+    background: var(--green-50);
+    border-color: var(--green-500);
+}
+
+.queue-item.with-doctor .token {
+    color: var(--green-700);
+}
+
+/* Empty State */
+.no-patients {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--padding-xl);
+    color: var(--text-muted);
+}
+
+/* Fullscreen Button */
+.fullscreen-btn {
+    position: fixed;
+    bottom: var(--margin-lg);
+    right: var(--margin-lg);
+}
+
+/* Fullscreen Mode */
+:fullscreen .queue-display-container {
+    padding: var(--padding-xl);
+}
+
+:fullscreen .token-number {
+    font-size: 200px;
+}
+
+:fullscreen .queue-item .token {
+    font-size: 48px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .queue-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .time-info {
+        text-align: center;
+        margin-top: var(--margin-md);
+    }
+
+    .token-number {
+        font-size: 80px;
+    }
+
+    .stat-value {
+        font-size: 32px;
+    }
+}
+</style>
+
+<script>
+frappe.ready(function() {
+    const hospital = "{{ hospital }}";
+
+    // Update time every second
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // Initial load
+    loadQueue();
+
+    // Refresh every 5 seconds
+    setInterval(loadQueue, 5000);
+
+    // Listen for realtime updates
+    if (frappe.realtime) {
+        frappe.realtime.on('queue_update', function(data) {
+            if (!hospital || data.hospital === hospital) {
+                loadQueue();
+                if (data.action === 'patient_called') {
+                    playCallSound(data.token_number, data.patient_name);
+                }
+            }
+        });
+    }
+
+    function updateTime() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('en-IN', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+        $('#current-time').text(timeStr);
+
+        const dateStr = now.toLocaleDateString('en-IN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        $('#current-date').text(dateStr);
+    }
+
+    function loadQueue() {
+        frappe.call({
+            method: 'hospital_saas.api.get_queue_display',
+            args: { hospital: hospital },
+            callback: function(r) {
+                if (r.message) {
+                    updateDisplay(r.message);
+                }
+            },
+            error: function() {
+                console.log('Error loading queue');
+            }
+        });
+    }
+
+    function updateDisplay(data) {
+        // Update current token being served
+        if (data.current) {
+            $('#current-token').text(data.current.token_number || '---');
+            $('#current-patient').text(data.current.patient_name || '');
+            $('#current-doctor').text(data.current.practitioner_name ? 'Doctor: ' + data.current.practitioner_name : '');
+        } else {
+            $('#current-token').text('---');
+            $('#current-patient').text('Waiting for next patient');
+            $('#current-doctor').text('');
+        }
+
+        // Update stats
+        $('#total-waiting').text(data.total_waiting || 0);
+
+        // Update waiting queue list
+        let html = '';
+        if (data.queue && data.queue.length > 0) {
+            data.queue.forEach(function(item) {
+                const itemClass = item.status === 'In Queue' ? 'in-queue' :
+                                 item.status === 'With Doctor' ? 'with-doctor' : '';
+                const statusBadge = item.status === 'In Queue' ?
+                    '<span class="indicator-pill yellow status-badge">In Queue</span>' :
+                    '<span class="indicator-pill blue status-badge">Waiting</span>';
+
+                html += `
+                    <div class="queue-item ${itemClass}">
+                        <div class="token">${item.token_number || '?'}</div>
+                        <div class="name">${item.patient_name || 'Patient'}</div>
+                        ${statusBadge}
+                    </div>
+                `;
+            });
+        } else {
+            html = '<div class="no-patients">No patients waiting in queue</div>';
+        }
+        $('#queue-list').html(html);
+    }
+
+    function playCallSound(tokenNumber, patientName) {
+        try {
+            // Browser speech synthesis for announcement
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = `Token number ${tokenNumber}. ${patientName || 'Patient'}, please proceed to the doctor.`;
+            msg.lang = 'en-IN';
+            msg.rate = 0.9;
+            window.speechSynthesis.speak(msg);
+        } catch(e) {
+            console.log('Speech synthesis not available');
+        }
+    }
+});
+
+function toggleFullscreen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+}
+</script>
+{% endblock %}

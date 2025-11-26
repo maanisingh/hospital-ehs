@@ -1,0 +1,351 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Pharmacy Queue{% endblock %}
+
+{% block page_content %}
+<div class="container py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Pharmacy Dispensing Queue</h1>
+            <p class="text-muted mb-0">Pending prescriptions for dispensing</p>
+        </div>
+        <div>
+            <button class="btn btn-default btn-sm" onclick="location.reload()">
+                <svg class="icon icon-sm"><use href="#icon-refresh"></use></svg>
+                Refresh
+            </button>
+            <a href="/app/pharmacy-prescription/new-pharmacy-prescription-1" class="btn btn-primary btn-sm ml-2">
+                + New Prescription
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats Cards - ERPNext Style -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="h2 mb-0 text-warning" id="pending-count">0</div>
+                    <small class="text-muted text-uppercase">Pending</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="h2 mb-0 text-info" id="partial-count">0</div>
+                    <small class="text-muted text-uppercase">Partial</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="h2 mb-0 text-success" id="dispensed-today">0</div>
+                    <small class="text-muted text-uppercase">Dispensed Today</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="h2 mb-0" id="total-value">₹0</div>
+                    <small class="text-muted text-uppercase">Total Value</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Queue Table - ERPNext Style -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <svg class="icon icon-sm mr-2"><use href="#icon-list"></use></svg>
+                Prescription Queue
+            </h5>
+            <span class="text-muted small">Auto-refreshes every 10 seconds</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="frappe-list" id="queue-container">
+                <table class="table table-bordered mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th>Prescription</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Items</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Waiting</th>
+                            <th style="width: 180px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="queue-body">
+                        <tr>
+                            <td colspan="9" class="text-center text-muted py-5">
+                                <div class="spinner-border spinner-border-sm mr-2" role="status"></div>
+                                Loading prescriptions...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ERPNext-matching styles */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    background: var(--card-bg);
+}
+
+.card-header {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border-top: none;
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+    border-color: var(--border-color);
+}
+
+.table tbody tr:hover {
+    background-color: var(--bg-light-gray);
+}
+
+/* Status indicators - ERPNext style */
+.indicator-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.indicator-pill.orange {
+    background: var(--bg-orange);
+    color: var(--text-on-orange);
+}
+
+.indicator-pill.yellow {
+    background: var(--bg-yellow);
+    color: var(--text-on-yellow);
+}
+
+.indicator-pill.green {
+    background: var(--bg-green);
+    color: var(--text-on-green);
+}
+
+.indicator-pill.red {
+    background: var(--bg-red);
+    color: var(--text-on-red);
+}
+
+/* Waiting time styling */
+.waiting-time {
+    font-weight: 500;
+}
+
+.waiting-time.urgent {
+    color: var(--red-500);
+}
+
+/* Action buttons - ERPNext style */
+.btn-action {
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: var(--border-radius-sm);
+}
+
+/* Link styling */
+.prescription-link {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.prescription-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 3rem;
+    text-align: center;
+}
+
+.empty-state svg {
+    width: 48px;
+    height: 48px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+</style>
+
+<script>
+frappe.ready(function() {
+    loadPharmacyQueue();
+    setInterval(loadPharmacyQueue, 10000);
+
+    function loadPharmacyQueue() {
+        frappe.call({
+            method: 'hospital_saas.hospital_saas.doctype.pharmacy_prescription.pharmacy_prescription.get_pharmacy_queue',
+            callback: function(r) {
+                if (r.message) {
+                    renderQueue(r.message);
+                }
+            },
+            error: function() {
+                $('#queue-body').html(`
+                    <tr>
+                        <td colspan="9" class="text-center text-muted py-4">
+                            Unable to load queue. <a href="#" onclick="location.reload()">Retry</a>
+                        </td>
+                    </tr>
+                `);
+            }
+        });
+
+        // Load dispensed today count
+        frappe.call({
+            method: 'frappe.client.get_count',
+            args: {
+                doctype: 'Pharmacy Prescription',
+                filters: {
+                    status: 'Dispensed',
+                    modified: ['>=', frappe.datetime.get_today()]
+                }
+            },
+            callback: function(r) {
+                $('#dispensed-today').text(r.message || 0);
+            }
+        });
+    }
+
+    function renderQueue(prescriptions) {
+        let pending = 0, partial = 0, totalValue = 0;
+        let html = '';
+
+        if (!prescriptions || prescriptions.length === 0) {
+            html = `
+                <tr>
+                    <td colspan="9" class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                            <rect x="9" y="3" width="6" height="4" rx="2"/>
+                            <path d="M9 14l2 2 4-4"/>
+                        </svg>
+                        <div class="text-muted">No pending prescriptions</div>
+                        <a href="/app/pharmacy-prescription/new-pharmacy-prescription-1" class="btn btn-primary btn-sm mt-3">
+                            + Create Prescription
+                        </a>
+                    </td>
+                </tr>
+            `;
+        } else {
+            prescriptions.forEach(function(rx, idx) {
+                if (rx.status === 'Pending') pending++;
+                if (rx.status === 'Partially Dispensed') partial++;
+                totalValue += parseFloat(rx.total_amount || 0);
+
+                let waitTime = getWaitingTime(rx.creation);
+                let urgentClass = waitTime > 30 ? 'urgent' : '';
+
+                let statusClass = rx.status === 'Pending' ? 'orange' : 'yellow';
+                let statusText = rx.status === 'Pending' ? 'Pending' : 'Partial';
+
+                html += `
+                    <tr>
+                        <td class="text-muted">${idx + 1}</td>
+                        <td>
+                            <a href="/app/pharmacy-prescription/${rx.name}" class="prescription-link">${rx.name}</a>
+                        </td>
+                        <td>${rx.patient_name || rx.patient || '-'}</td>
+                        <td>${rx.practitioner_name || '-'}</td>
+                        <td>${rx.item_count || '-'}</td>
+                        <td>₹${parseFloat(rx.total_amount || 0).toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                        <td><span class="indicator-pill ${statusClass}">${statusText}</span></td>
+                        <td class="waiting-time ${urgentClass}">${waitTime} min</td>
+                        <td>
+                            <a href="/app/pharmacy-prescription/${rx.name}" class="btn btn-default btn-action btn-xs mr-1">
+                                View
+                            </a>
+                            <button class="btn btn-primary btn-action btn-xs" onclick="dispensePrescription('${rx.name}')">
+                                Dispense
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        $('#queue-body').html(html);
+        $('#pending-count').text(pending);
+        $('#partial-count').text(partial);
+        $('#total-value').text('₹' + totalValue.toLocaleString('en-IN', {minimumFractionDigits: 2}));
+    }
+
+    function getWaitingTime(creationStr) {
+        if (!creationStr) return 0;
+        let creation = new Date(creationStr);
+        let now = new Date();
+        let diff = Math.floor((now - creation) / (1000 * 60));
+        return diff;
+    }
+
+    window.dispensePrescription = function(name) {
+        frappe.confirm(
+            'Dispense all items in this prescription?',
+            function() {
+                frappe.call({
+                    method: 'hospital_saas.hospital_saas.doctype.pharmacy_prescription.pharmacy_prescription.dispense_prescription',
+                    args: { prescription_name: name },
+                    callback: function(r) {
+                        if (r.message && r.message.success) {
+                            frappe.show_alert({
+                                message: 'Prescription dispensed successfully',
+                                indicator: 'green'
+                            });
+                            loadPharmacyQueue();
+                        } else {
+                            frappe.show_alert({
+                                message: r.message.error || 'Failed to dispense',
+                                indicator: 'red'
+                            });
+                        }
+                    }
+                });
+            }
+        );
+    };
+});
+</script>
+{% endblock %}

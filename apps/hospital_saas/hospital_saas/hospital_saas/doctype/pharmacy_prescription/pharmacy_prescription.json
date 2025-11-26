@@ -1,0 +1,327 @@
+{
+  "actions": [],
+  "autoname": "naming_series:",
+  "creation": "2024-01-01 00:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "patient",
+    "patient_name",
+    "patient_age",
+    "patient_gender",
+    "column_break_1",
+    "prescription_date",
+    "hospital",
+    "pharmacy",
+    "status",
+    "section_break_source",
+    "practitioner",
+    "practitioner_name",
+    "department",
+    "column_break_2",
+    "opd_token",
+    "patient_encounter",
+    "ipd_admission",
+    "section_break_items",
+    "items",
+    "section_break_totals",
+    "total_quantity",
+    "total_amount",
+    "column_break_3",
+    "discount_amount",
+    "net_amount",
+    "section_break_dispensing",
+    "dispensed_by",
+    "dispensed_at",
+    "column_break_4",
+    "sales_invoice",
+    "stock_entry",
+    "section_break_notes",
+    "notes",
+    "amended_from"
+  ],
+  "fields": [
+    {
+      "default": "RX-.YYYY.-.#####",
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Series",
+      "options": "RX-.YYYY.-.#####\nRX-.hospital_code.-.#####",
+      "reqd": 1
+    },
+    {
+      "fieldname": "patient",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Patient",
+      "options": "Patient",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "patient.patient_name",
+      "fieldname": "patient_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Patient Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "patient_age",
+      "fieldtype": "Data",
+      "label": "Age",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "patient.sex",
+      "fieldname": "patient_gender",
+      "fieldtype": "Data",
+      "label": "Gender",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Today",
+      "fieldname": "prescription_date",
+      "fieldtype": "Date",
+      "in_list_view": 1,
+      "label": "Prescription Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "hospital",
+      "fieldtype": "Link",
+      "in_standard_filter": 1,
+      "label": "Hospital",
+      "options": "Hospital"
+    },
+    {
+      "fieldname": "pharmacy",
+      "fieldtype": "Link",
+      "label": "Pharmacy",
+      "options": "Pharmacy"
+    },
+    {
+      "default": "Draft",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Status",
+      "options": "Draft\nPending\nPartially Dispensed\nDispensed\nCancelled"
+    },
+    {
+      "fieldname": "section_break_source",
+      "fieldtype": "Section Break",
+      "label": "Source"
+    },
+    {
+      "fieldname": "practitioner",
+      "fieldtype": "Link",
+      "label": "Prescribing Doctor",
+      "options": "Healthcare Practitioner"
+    },
+    {
+      "fetch_from": "practitioner.practitioner_name",
+      "fieldname": "practitioner_name",
+      "fieldtype": "Data",
+      "label": "Doctor Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "department",
+      "fieldtype": "Link",
+      "label": "Department",
+      "options": "Department"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "opd_token",
+      "fieldtype": "Link",
+      "label": "OPD Token",
+      "options": "OPD Token"
+    },
+    {
+      "fieldname": "patient_encounter",
+      "fieldtype": "Link",
+      "label": "Patient Encounter",
+      "options": "Patient Encounter"
+    },
+    {
+      "fieldname": "ipd_admission",
+      "fieldtype": "Link",
+      "label": "IPD Admission",
+      "options": "IPD Admission"
+    },
+    {
+      "fieldname": "section_break_items",
+      "fieldtype": "Section Break",
+      "label": "Prescription Items"
+    },
+    {
+      "fieldname": "items",
+      "fieldtype": "Table",
+      "label": "Items",
+      "options": "Prescription Item",
+      "reqd": 1
+    },
+    {
+      "fieldname": "section_break_totals",
+      "fieldtype": "Section Break",
+      "label": "Totals"
+    },
+    {
+      "fieldname": "total_quantity",
+      "fieldtype": "Float",
+      "label": "Total Quantity",
+      "read_only": 1
+    },
+    {
+      "fieldname": "total_amount",
+      "fieldtype": "Currency",
+      "label": "Total Amount",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "discount_amount",
+      "fieldtype": "Currency",
+      "label": "Discount Amount"
+    },
+    {
+      "fieldname": "net_amount",
+      "fieldtype": "Currency",
+      "label": "Net Amount",
+      "read_only": 1
+    },
+    {
+      "collapsible": 1,
+      "fieldname": "section_break_dispensing",
+      "fieldtype": "Section Break",
+      "label": "Dispensing Details"
+    },
+    {
+      "fieldname": "dispensed_by",
+      "fieldtype": "Link",
+      "label": "Dispensed By",
+      "options": "User",
+      "read_only": 1
+    },
+    {
+      "fieldname": "dispensed_at",
+      "fieldtype": "Datetime",
+      "label": "Dispensed At",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_4",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "sales_invoice",
+      "fieldtype": "Link",
+      "label": "Sales Invoice",
+      "options": "Sales Invoice",
+      "read_only": 1
+    },
+    {
+      "fieldname": "stock_entry",
+      "fieldtype": "Link",
+      "label": "Stock Entry",
+      "options": "Stock Entry",
+      "read_only": 1
+    },
+    {
+      "collapsible": 1,
+      "fieldname": "section_break_notes",
+      "fieldtype": "Section Break",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text",
+      "label": "Notes"
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Pharmacy Prescription",
+      "print_hide": 1,
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "is_submittable": 1,
+  "links": [
+    {
+      "link_doctype": "Sales Invoice",
+      "link_fieldname": "custom_pharmacy_prescription"
+    }
+  ],
+  "modified": "2024-01-01 00:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital Saas",
+  "name": "Pharmacy Prescription",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Physician",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "patient_name",
+  "track_changes": 1
+}

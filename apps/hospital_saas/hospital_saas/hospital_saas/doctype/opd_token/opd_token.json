@@ -1,0 +1,250 @@
+{
+    "actions": [],
+    "autoname": "format:OPD-{hospital_code}-{###}",
+    "creation": "2024-11-26 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "token_section",
+        "token_number",
+        "token_date",
+        "column_break_1",
+        "hospital",
+        "hospital_code",
+        "status",
+        "patient_section",
+        "patient",
+        "patient_name",
+        "mobile",
+        "column_break_2",
+        "gender",
+        "age",
+        "consultation_section",
+        "department",
+        "practitioner",
+        "column_break_3",
+        "appointment_time",
+        "actual_time",
+        "queue_section",
+        "queue_position",
+        "called_at",
+        "column_break_4",
+        "consultation_started",
+        "consultation_ended",
+        "notes_section",
+        "chief_complaint",
+        "notes"
+    ],
+    "fields": [
+        {
+            "fieldname": "token_section",
+            "fieldtype": "Section Break",
+            "label": "Token Details"
+        },
+        {
+            "fieldname": "token_number",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Token Number",
+            "read_only": 1,
+            "reqd": 1
+        },
+        {
+            "default": "Today",
+            "fieldname": "token_date",
+            "fieldtype": "Date",
+            "in_list_view": 1,
+            "label": "Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "hospital",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Hospital",
+            "options": "Hospital",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "hospital.hospital_code",
+            "fieldname": "hospital_code",
+            "fieldtype": "Data",
+            "label": "Hospital Code",
+            "read_only": 1
+        },
+        {
+            "default": "Waiting",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Waiting\nIn Queue\nWith Doctor\nIn Lab\nIn Pharmacy\nCompleted\nNo Show\nCancelled"
+        },
+        {
+            "fieldname": "patient_section",
+            "fieldtype": "Section Break",
+            "label": "Patient Details"
+        },
+        {
+            "fieldname": "patient",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Patient",
+            "options": "Patient",
+            "reqd": 1
+        },
+        {
+            "fetch_from": "patient.patient_name",
+            "fieldname": "patient_name",
+            "fieldtype": "Data",
+            "label": "Patient Name",
+            "read_only": 1
+        },
+        {
+            "fetch_from": "patient.mobile",
+            "fieldname": "mobile",
+            "fieldtype": "Data",
+            "label": "Mobile",
+            "read_only": 1
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fetch_from": "patient.sex",
+            "fieldname": "gender",
+            "fieldtype": "Data",
+            "label": "Gender",
+            "read_only": 1
+        },
+        {
+            "fieldname": "age",
+            "fieldtype": "Data",
+            "label": "Age",
+            "read_only": 1
+        },
+        {
+            "fieldname": "consultation_section",
+            "fieldtype": "Section Break",
+            "label": "Consultation"
+        },
+        {
+            "fieldname": "department",
+            "fieldtype": "Link",
+            "label": "Department",
+            "options": "Medical Department"
+        },
+        {
+            "fieldname": "practitioner",
+            "fieldtype": "Link",
+            "label": "Doctor",
+            "options": "Healthcare Practitioner"
+        },
+        {
+            "fieldname": "column_break_3",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "appointment_time",
+            "fieldtype": "Time",
+            "label": "Scheduled Time"
+        },
+        {
+            "fieldname": "actual_time",
+            "fieldtype": "Time",
+            "label": "Actual Time"
+        },
+        {
+            "fieldname": "queue_section",
+            "fieldtype": "Section Break",
+            "label": "Queue Management"
+        },
+        {
+            "fieldname": "queue_position",
+            "fieldtype": "Int",
+            "label": "Queue Position"
+        },
+        {
+            "fieldname": "called_at",
+            "fieldtype": "Datetime",
+            "label": "Called At"
+        },
+        {
+            "fieldname": "column_break_4",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "consultation_started",
+            "fieldtype": "Datetime",
+            "label": "Consultation Started"
+        },
+        {
+            "fieldname": "consultation_ended",
+            "fieldtype": "Datetime",
+            "label": "Consultation Ended"
+        },
+        {
+            "fieldname": "notes_section",
+            "fieldtype": "Section Break",
+            "label": "Notes"
+        },
+        {
+            "fieldname": "chief_complaint",
+            "fieldtype": "Small Text",
+            "label": "Chief Complaint"
+        },
+        {
+            "fieldname": "notes",
+            "fieldtype": "Text Editor",
+            "label": "Notes"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2024-11-26 12:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Hospital SAAS",
+    "name": "OPD Token",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "email": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hospital Receptionist",
+            "write": 1
+        },
+        {
+            "email": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Hospital Doctor",
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 1
+}

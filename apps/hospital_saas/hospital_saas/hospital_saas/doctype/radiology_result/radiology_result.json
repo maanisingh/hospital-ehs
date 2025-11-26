@@ -1,0 +1,379 @@
+{
+  "actions": [],
+  "autoname": "naming_series:",
+  "creation": "2024-11-26 20:00:00.000000",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "naming_series",
+    "radiology_order",
+    "patient",
+    "patient_name",
+    "patient_age",
+    "patient_sex",
+    "column_break_1",
+    "examination_date",
+    "examination_time",
+    "status",
+    "section_examination",
+    "examination_type",
+    "modality",
+    "body_part",
+    "column_break_2",
+    "practitioner",
+    "practitioner_name",
+    "reporting_radiologist",
+    "radiologist_name",
+    "section_findings",
+    "technique",
+    "findings",
+    "impression",
+    "section_images",
+    "images",
+    "section_comparison",
+    "comparison_study",
+    "comparison_findings",
+    "section_recommendations",
+    "recommendations",
+    "follow_up_required",
+    "follow_up_date",
+    "section_approval",
+    "reported_date",
+    "reported_time",
+    "approved_by",
+    "approval_date",
+    "amended_from"
+  ],
+  "fields": [
+    {
+      "fieldname": "naming_series",
+      "fieldtype": "Select",
+      "label": "Series",
+      "options": "RAD-RES-.YYYY.-",
+      "reqd": 1
+    },
+    {
+      "fieldname": "radiology_order",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Radiology Order",
+      "options": "Radiology Order",
+      "reqd": 1
+    },
+    {
+      "fieldname": "patient",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Patient",
+      "options": "Patient",
+      "reqd": 1
+    },
+    {
+      "fetch_from": "patient.patient_name",
+      "fieldname": "patient_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Patient Name",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "patient.age",
+      "fieldname": "patient_age",
+      "fieldtype": "Data",
+      "label": "Age",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "patient.sex",
+      "fieldname": "patient_sex",
+      "fieldtype": "Data",
+      "label": "Sex",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Today",
+      "fieldname": "examination_date",
+      "fieldtype": "Date",
+      "in_list_view": 1,
+      "label": "Examination Date",
+      "reqd": 1
+    },
+    {
+      "fieldname": "examination_time",
+      "fieldtype": "Time",
+      "label": "Examination Time"
+    },
+    {
+      "default": "Draft",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Status",
+      "options": "Draft\nPending Review\nApproved\nAmended",
+      "reqd": 1
+    },
+    {
+      "fieldname": "section_examination",
+      "fieldtype": "Section Break",
+      "label": "Examination Details"
+    },
+    {
+      "fetch_from": "radiology_order.examination_type",
+      "fieldname": "examination_type",
+      "fieldtype": "Link",
+      "in_standard_filter": 1,
+      "label": "Examination Type",
+      "options": "Radiology Examination Type",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "radiology_order.modality",
+      "fieldname": "modality",
+      "fieldtype": "Data",
+      "label": "Modality",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "radiology_order.body_part",
+      "fieldname": "body_part",
+      "fieldtype": "Data",
+      "label": "Body Part",
+      "read_only": 1
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fetch_from": "radiology_order.practitioner",
+      "fieldname": "practitioner",
+      "fieldtype": "Link",
+      "label": "Ordering Practitioner",
+      "options": "Healthcare Practitioner",
+      "read_only": 1
+    },
+    {
+      "fetch_from": "practitioner.practitioner_name",
+      "fieldname": "practitioner_name",
+      "fieldtype": "Data",
+      "label": "Practitioner Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "reporting_radiologist",
+      "fieldtype": "Link",
+      "label": "Reporting Radiologist",
+      "options": "Healthcare Practitioner"
+    },
+    {
+      "fetch_from": "reporting_radiologist.practitioner_name",
+      "fieldname": "radiologist_name",
+      "fieldtype": "Data",
+      "label": "Radiologist Name",
+      "read_only": 1
+    },
+    {
+      "fieldname": "section_findings",
+      "fieldtype": "Section Break",
+      "label": "Findings"
+    },
+    {
+      "fieldname": "technique",
+      "fieldtype": "Small Text",
+      "label": "Technique"
+    },
+    {
+      "fieldname": "findings",
+      "fieldtype": "Text Editor",
+      "label": "Findings",
+      "reqd": 1
+    },
+    {
+      "fieldname": "impression",
+      "fieldtype": "Text Editor",
+      "label": "Impression"
+    },
+    {
+      "fieldname": "section_images",
+      "fieldtype": "Section Break",
+      "label": "Images"
+    },
+    {
+      "fieldname": "images",
+      "fieldtype": "Table",
+      "label": "Images",
+      "options": "Radiology Image"
+    },
+    {
+      "fieldname": "section_comparison",
+      "fieldtype": "Section Break",
+      "collapsible": 1,
+      "label": "Comparison Study"
+    },
+    {
+      "fieldname": "comparison_study",
+      "fieldtype": "Link",
+      "label": "Comparison Study",
+      "options": "Radiology Result"
+    },
+    {
+      "fieldname": "comparison_findings",
+      "fieldtype": "Small Text",
+      "label": "Comparison Findings"
+    },
+    {
+      "fieldname": "section_recommendations",
+      "fieldtype": "Section Break",
+      "label": "Recommendations"
+    },
+    {
+      "fieldname": "recommendations",
+      "fieldtype": "Text Editor",
+      "label": "Recommendations"
+    },
+    {
+      "default": "0",
+      "fieldname": "follow_up_required",
+      "fieldtype": "Check",
+      "label": "Follow-up Required"
+    },
+    {
+      "depends_on": "follow_up_required",
+      "fieldname": "follow_up_date",
+      "fieldtype": "Date",
+      "label": "Follow-up Date"
+    },
+    {
+      "fieldname": "section_approval",
+      "fieldtype": "Section Break",
+      "label": "Approval"
+    },
+    {
+      "fieldname": "reported_date",
+      "fieldtype": "Date",
+      "label": "Reported Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "reported_time",
+      "fieldtype": "Time",
+      "label": "Reported Time",
+      "read_only": 1
+    },
+    {
+      "fieldname": "approved_by",
+      "fieldtype": "Link",
+      "label": "Approved By",
+      "options": "User",
+      "read_only": 1
+    },
+    {
+      "fieldname": "approval_date",
+      "fieldtype": "Datetime",
+      "label": "Approval Date",
+      "read_only": 1
+    },
+    {
+      "fieldname": "amended_from",
+      "fieldtype": "Link",
+      "label": "Amended From",
+      "no_copy": 1,
+      "options": "Radiology Result",
+      "print_hide": 1,
+      "read_only": 1
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "is_submittable": 1,
+  "links": [],
+  "modified": "2024-11-26 20:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Radiology Result",
+  "naming_rule": "By \"Naming Series\" field",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "amend": 1,
+      "cancel": 1,
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Physician",
+      "share": 1,
+      "submit": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Laboratory User",
+      "submit": 1,
+      "write": 1
+    }
+  ],
+  "search_fields": "patient_name,examination_type,status",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [
+    {
+      "color": "gray",
+      "title": "Draft"
+    },
+    {
+      "color": "yellow",
+      "title": "Pending Review"
+    },
+    {
+      "color": "green",
+      "title": "Approved"
+    },
+    {
+      "color": "blue",
+      "title": "Amended"
+    }
+  ],
+  "title_field": "patient_name",
+  "track_changes": 1
+}
