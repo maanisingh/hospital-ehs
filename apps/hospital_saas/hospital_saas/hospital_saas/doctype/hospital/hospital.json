@@ -1,0 +1,294 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "field:hospital_name",
+  "creation": "2024-11-26 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "basic_info_section",
+    "hospital_name",
+    "hospital_code",
+    "hospital_type",
+    "column_break_1",
+    "status",
+    "logo",
+    "establishment_date",
+    "contact_section",
+    "email",
+    "phone",
+    "website",
+    "column_break_2",
+    "address_line_1",
+    "address_line_2",
+    "city",
+    "state",
+    "country",
+    "pincode",
+    "registration_section",
+    "registration_number",
+    "license_number",
+    "column_break_3",
+    "license_expiry_date",
+    "accreditation",
+    "capacity_section",
+    "total_beds",
+    "icu_beds",
+    "column_break_4",
+    "emergency_beds",
+    "operation_theaters",
+    "admin_section",
+    "admin_user",
+    "subscription_plan",
+    "column_break_5",
+    "subscription_start",
+    "subscription_end"
+  ],
+  "fields": [
+    {
+      "fieldname": "basic_info_section",
+      "fieldtype": "Section Break",
+      "label": "Basic Information"
+    },
+    {
+      "fieldname": "hospital_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Hospital Name",
+      "reqd": 1,
+      "unique": 1
+    },
+    {
+      "fieldname": "hospital_code",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Hospital Code",
+      "unique": 1
+    },
+    {
+      "fieldname": "hospital_type",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Hospital Type",
+      "options": "\nGeneral Hospital\nSpecialty Hospital\nTeaching Hospital\nClinic\nNursing Home\nDiagnostic Center\nRehabilitation Center\nMaternity Hospital\nChildren's Hospital\nPsychiatric Hospital"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Active",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Active\nInactive\nSuspended\nClosed"
+    },
+    {
+      "fieldname": "logo",
+      "fieldtype": "Attach Image",
+      "label": "Hospital Logo"
+    },
+    {
+      "fieldname": "establishment_date",
+      "fieldtype": "Date",
+      "label": "Establishment Date"
+    },
+    {
+      "fieldname": "contact_section",
+      "fieldtype": "Section Break",
+      "label": "Contact Information"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "phone",
+      "fieldtype": "Data",
+      "label": "Phone",
+      "options": "Phone"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "address_line_1",
+      "fieldtype": "Data",
+      "label": "Address Line 1"
+    },
+    {
+      "fieldname": "address_line_2",
+      "fieldtype": "Data",
+      "label": "Address Line 2"
+    },
+    {
+      "fieldname": "city",
+      "fieldtype": "Data",
+      "label": "City"
+    },
+    {
+      "fieldname": "state",
+      "fieldtype": "Data",
+      "label": "State/Province"
+    },
+    {
+      "fieldname": "country",
+      "fieldtype": "Link",
+      "label": "Country",
+      "options": "Country"
+    },
+    {
+      "fieldname": "pincode",
+      "fieldtype": "Data",
+      "label": "PIN/ZIP Code"
+    },
+    {
+      "fieldname": "registration_section",
+      "fieldtype": "Section Break",
+      "label": "Registration & Licensing"
+    },
+    {
+      "fieldname": "registration_number",
+      "fieldtype": "Data",
+      "label": "Registration Number"
+    },
+    {
+      "fieldname": "license_number",
+      "fieldtype": "Data",
+      "label": "License Number"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "license_expiry_date",
+      "fieldtype": "Date",
+      "label": "License Expiry Date"
+    },
+    {
+      "fieldname": "accreditation",
+      "fieldtype": "Data",
+      "label": "Accreditation"
+    },
+    {
+      "fieldname": "capacity_section",
+      "fieldtype": "Section Break",
+      "label": "Capacity"
+    },
+    {
+      "default": "0",
+      "fieldname": "total_beds",
+      "fieldtype": "Int",
+      "label": "Total Beds"
+    },
+    {
+      "default": "0",
+      "fieldname": "icu_beds",
+      "fieldtype": "Int",
+      "label": "ICU Beds"
+    },
+    {
+      "fieldname": "column_break_4",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "emergency_beds",
+      "fieldtype": "Int",
+      "label": "Emergency Beds"
+    },
+    {
+      "default": "0",
+      "fieldname": "operation_theaters",
+      "fieldtype": "Int",
+      "label": "Operation Theaters"
+    },
+    {
+      "fieldname": "admin_section",
+      "fieldtype": "Section Break",
+      "label": "Administration"
+    },
+    {
+      "fieldname": "admin_user",
+      "fieldtype": "Link",
+      "label": "Admin User",
+      "options": "User"
+    },
+    {
+      "fieldname": "subscription_plan",
+      "fieldtype": "Select",
+      "label": "Subscription Plan",
+      "options": "\nBasic\nStandard\nPremium\nEnterprise"
+    },
+    {
+      "fieldname": "column_break_5",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "subscription_start",
+      "fieldtype": "Date",
+      "label": "Subscription Start"
+    },
+    {
+      "fieldname": "subscription_end",
+      "fieldtype": "Date",
+      "label": "Subscription End"
+    }
+  ],
+  "image_field": "logo",
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2024-11-26 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Hospital",
+  "naming_rule": "By fieldname",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Physician"
+    }
+  ],
+  "quick_entry": 1,
+  "search_fields": "hospital_name,hospital_code,city",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "hospital_name",
+  "track_changes": 1
+}

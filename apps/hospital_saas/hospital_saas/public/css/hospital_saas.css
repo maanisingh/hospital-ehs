@@ -1,0 +1,285 @@
+/*
+ * Hospital SAAS Custom Styles
+ * 
+ * Custom styling for Hospital Management System
+ */
+
+/* ============================================
+   ROOT VARIABLES - Hospital Theme Colors
+   ============================================ */
+:root {
+    --hospital-primary: #2563eb;        /* Blue - Trust & Healthcare */
+    --hospital-primary-light: #3b82f6;
+    --hospital-primary-dark: #1d4ed8;
+    --hospital-secondary: #10b981;      /* Green - Health & Wellness */
+    --hospital-accent: #f59e0b;         /* Amber - Attention */
+    --hospital-danger: #ef4444;         /* Red - Emergency */
+    --hospital-warning: #f97316;        /* Orange - Warning */
+    --hospital-success: #22c55e;        /* Green - Success */
+    --hospital-info: #06b6d4;           /* Cyan - Information */
+    --hospital-bg-light: #f0f9ff;       /* Light blue background */
+}
+
+/* ============================================
+   WORKSPACE CUSTOMIZATION
+   ============================================ */
+[data-page-container="Hospital SAAS"] .workspace-sidebar-item.selected,
+.workspace-sidebar-item[data-name="Hospital SAAS"].selected {
+    background-color: var(--hospital-primary-light) !important;
+    border-left: 3px solid var(--hospital-primary-dark);
+}
+
+/* Hospital SAAS Module Cards */
+.hospital-saas-card {
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    transition: box-shadow 0.2s ease;
+}
+
+.hospital-saas-card:hover {
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+/* ============================================
+   PATIENT-RELATED STYLES
+   ============================================ */
+.patient-card {
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+    border-left: 4px solid var(--hospital-primary);
+}
+
+.patient-status-active {
+    color: var(--hospital-success);
+}
+
+.patient-status-inactive {
+    color: #9ca3af;
+}
+
+.patient-status-critical {
+    color: var(--hospital-danger);
+    font-weight: 600;
+}
+
+/* ============================================
+   APPOINTMENT STYLES
+   ============================================ */
+.appointment-scheduled {
+    background-color: #dbeafe;
+    border-left: 3px solid var(--hospital-primary);
+}
+
+.appointment-in-progress {
+    background-color: #fef3c7;
+    border-left: 3px solid var(--hospital-accent);
+}
+
+.appointment-completed {
+    background-color: #d1fae5;
+    border-left: 3px solid var(--hospital-success);
+}
+
+.appointment-cancelled {
+    background-color: #fee2e2;
+    border-left: 3px solid var(--hospital-danger);
+}
+
+/* ============================================
+   DASHBOARD STATS CARDS
+   ============================================ */
+.hospital-stat-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.hospital-stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--hospital-primary);
+}
+
+.hospital-stat-card .stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hospital-stat-card.patients {
+    border-top: 4px solid var(--hospital-primary);
+}
+
+.hospital-stat-card.appointments {
+    border-top: 4px solid var(--hospital-secondary);
+}
+
+.hospital-stat-card.revenue {
+    border-top: 4px solid var(--hospital-accent);
+}
+
+.hospital-stat-card.alerts {
+    border-top: 4px solid var(--hospital-danger);
+}
+
+/* ============================================
+   VITAL SIGNS INDICATORS
+   ============================================ */
+.vital-normal {
+    color: var(--hospital-success);
+}
+
+.vital-warning {
+    color: var(--hospital-warning);
+}
+
+.vital-critical {
+    color: var(--hospital-danger);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* ============================================
+   FORM CUSTOMIZATIONS
+   ============================================ */
+.frappe-control[data-fieldname="patient"],
+.frappe-control[data-fieldname="practitioner"] {
+    background-color: var(--hospital-bg-light);
+    border-radius: 6px;
+    padding: 8px;
+}
+
+/* Emergency/Priority Badge */
+.badge-emergency {
+    background-color: var(--hospital-danger);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+
+.badge-urgent {
+    background-color: var(--hospital-warning);
+    color: white;
+}
+
+.badge-routine {
+    background-color: var(--hospital-info);
+    color: white;
+}
+
+/* ============================================
+   TIMELINE / PATIENT HISTORY
+   ============================================ */
+.patient-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.patient-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #e5e7eb;
+}
+
+.timeline-event {
+    position: relative;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 16px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--hospital-primary);
+    border: 2px solid white;
+}
+
+/* ============================================
+   QUICK ACTION BUTTONS
+   ============================================ */
+.hospital-quick-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.hospital-quick-action.new-patient {
+    background-color: var(--hospital-primary);
+    color: white;
+}
+
+.hospital-quick-action.new-appointment {
+    background-color: var(--hospital-secondary);
+    color: white;
+}
+
+.hospital-quick-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   MODULE HIDING (from hooks.py)
+   ============================================ */
+/* Hide non-hospital modules for cleaner interface */
+.desk-sidebar [data-doctype="Manufacturing"],
+.desk-sidebar [data-doctype="Quality"],
+.desk-sidebar [data-doctype="Projects"],
+.desk-sidebar [data-doctype="CRM"],
+.desk-sidebar [data-doctype="Buying"],
+.desk-sidebar [data-doctype="Selling"],
+.desk-sidebar [data-doctype="Assets"] {
+    display: none !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+    .hospital-stat-card .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .hospital-quick-action {
+        padding: 8px 12px;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .hospital-stat-card {
+        box-shadow: none;
+        border: 1px solid #e5e7eb;
+    }
+    
+    .hospital-quick-action {
+        display: none;
+    }
+}

@@ -1,0 +1,282 @@
+{
+  "charts": [
+    {
+      "chart_name": "Patient Appointments",
+      "label": "Today's Appointments"
+    }
+  ],
+  "content": "[{\"id\":\"hospital_welcome\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Hospital Management System</b></span>\",\"col\":12}},{\"id\":\"quick_access\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Patient\",\"col\":3}},{\"id\":\"shortcut_appointment\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Patient Appointment\",\"col\":3}},{\"id\":\"shortcut_practitioner\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Healthcare Practitioner\",\"col\":3}},{\"id\":\"shortcut_hospital\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Hospital\",\"col\":3}},{\"id\":\"section_operations\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\">Daily Operations</span>\",\"col\":12}},{\"id\":\"link_patient_encounter\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Patient Encounter\",\"col\":3}},{\"id\":\"link_vital_signs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Vital Signs\",\"col\":3}},{\"id\":\"link_clinical_procedure\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Clinical Procedure\",\"col\":3}},{\"id\":\"link_lab_test\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Lab Test\",\"col\":3}},{\"id\":\"section_billing\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h5\\\">Billing & Finance</span>\",\"col\":12}},{\"id\":\"link_sales_invoice\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":4}},{\"id\":\"link_payment_entry\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Entry\",\"col\":4}},{\"id\":\"link_patient_statement\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Patient\",\"col\":4}}]",
+  "creation": "2024-11-26 12:00:00.000000",
+  "docstatus": 0,
+  "doctype": "Workspace",
+  "for_user": "",
+  "hide_custom": 0,
+  "icon": "hospital",
+  "idx": 0,
+  "is_hidden": 0,
+  "label": "Hospital SAAS",
+  "links": [
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Patient Management",
+      "link_count": 0,
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Patient",
+      "link_count": 0,
+      "link_to": "Patient",
+      "link_type": "DocType",
+      "onboard": 1,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Patient Appointment",
+      "link_count": 0,
+      "link_to": "Patient Appointment",
+      "link_type": "DocType",
+      "onboard": 1,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Patient Encounter",
+      "link_count": 0,
+      "link_to": "Patient Encounter",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Vital Signs",
+      "link_count": 0,
+      "link_to": "Vital Signs",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Clinical",
+      "link_count": 0,
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Clinical Procedure",
+      "link_count": 0,
+      "link_to": "Clinical Procedure",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Lab Test",
+      "link_count": 0,
+      "link_to": "Lab Test",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Sample Collection",
+      "link_count": 0,
+      "link_to": "Sample Collection",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Hospital Setup",
+      "link_count": 0,
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Hospital",
+      "link_count": 0,
+      "link_to": "Hospital",
+      "link_type": "DocType",
+      "onboard": 1,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Department",
+      "link_count": 0,
+      "link_to": "Department",
+      "link_type": "DocType",
+      "onboard": 1,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Healthcare Practitioner",
+      "link_count": 0,
+      "link_to": "Healthcare Practitioner",
+      "link_type": "DocType",
+      "onboard": 1,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Medical Department",
+      "link_count": 0,
+      "link_to": "Medical Department",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Settings",
+      "link_count": 0,
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Hospital SAAS Settings",
+      "link_count": 0,
+      "link_to": "Hospital SAAS Settings",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    },
+    {
+      "dependencies": "",
+      "hidden": 0,
+      "is_query_report": 0,
+      "label": "Healthcare Settings",
+      "link_count": 0,
+      "link_to": "Healthcare Settings",
+      "link_type": "DocType",
+      "onboard": 0,
+      "type": "Link"
+    }
+  ],
+  "modified": "2024-11-26 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Hospital SAAS",
+  "owner": "Administrator",
+  "parent_page": "",
+  "public": 1,
+  "restrict_to_domain": "",
+  "roles": [],
+  "sequence_id": 1,
+  "shortcuts": [
+    {
+      "color": "Blue",
+      "doc_view": "List",
+      "label": "Patient",
+      "link_to": "Patient",
+      "type": "DocType"
+    },
+    {
+      "color": "Green",
+      "doc_view": "List",
+      "label": "Patient Appointment",
+      "link_to": "Patient Appointment",
+      "type": "DocType"
+    },
+    {
+      "color": "Orange",
+      "doc_view": "List",
+      "label": "Healthcare Practitioner",
+      "link_to": "Healthcare Practitioner",
+      "type": "DocType"
+    },
+    {
+      "color": "Purple",
+      "doc_view": "List",
+      "label": "Hospital",
+      "link_to": "Hospital",
+      "type": "DocType"
+    },
+    {
+      "color": "Cyan",
+      "doc_view": "List",
+      "label": "Patient Encounter",
+      "link_to": "Patient Encounter",
+      "type": "DocType"
+    },
+    {
+      "color": "Yellow",
+      "doc_view": "List",
+      "label": "Vital Signs",
+      "link_to": "Vital Signs",
+      "type": "DocType"
+    },
+    {
+      "color": "Red",
+      "doc_view": "List",
+      "label": "Clinical Procedure",
+      "link_to": "Clinical Procedure",
+      "type": "DocType"
+    },
+    {
+      "color": "Pink",
+      "doc_view": "List",
+      "label": "Lab Test",
+      "link_to": "Lab Test",
+      "type": "DocType"
+    },
+    {
+      "color": "Grey",
+      "doc_view": "List",
+      "label": "Sales Invoice",
+      "link_to": "Sales Invoice",
+      "type": "DocType"
+    },
+    {
+      "color": "Grey",
+      "doc_view": "List",
+      "label": "Payment Entry",
+      "link_to": "Payment Entry",
+      "type": "DocType"
+    }
+  ],
+  "title": "Hospital SAAS"
+}

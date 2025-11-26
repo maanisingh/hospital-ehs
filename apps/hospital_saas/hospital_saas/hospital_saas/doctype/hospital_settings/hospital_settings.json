@@ -1,0 +1,183 @@
+{
+  "actions": [],
+  "creation": "2024-11-26 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "general_section",
+    "enable_multi_tenant",
+    "default_hospital",
+    "column_break_1",
+    "default_currency",
+    "date_format",
+    "appointment_section",
+    "default_appointment_duration",
+    "appointment_buffer_time",
+    "column_break_2",
+    "enable_online_booking",
+    "auto_confirm_appointments",
+    "billing_section",
+    "enable_insurance",
+    "default_tax_template",
+    "column_break_3",
+    "auto_create_invoice",
+    "notification_section",
+    "enable_sms_notifications",
+    "enable_email_notifications",
+    "column_break_4",
+    "appointment_reminder_hours"
+  ],
+  "fields": [
+    {
+      "fieldname": "general_section",
+      "fieldtype": "Section Break",
+      "label": "General Settings"
+    },
+    {
+      "default": "1",
+      "fieldname": "enable_multi_tenant",
+      "fieldtype": "Check",
+      "label": "Enable Multi-Tenant Mode"
+    },
+    {
+      "fieldname": "default_hospital",
+      "fieldtype": "Link",
+      "label": "Default Hospital",
+      "options": "Hospital"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "USD",
+      "fieldname": "default_currency",
+      "fieldtype": "Link",
+      "label": "Default Currency",
+      "options": "Currency"
+    },
+    {
+      "default": "dd-mm-yyyy",
+      "fieldname": "date_format",
+      "fieldtype": "Select",
+      "label": "Date Format",
+      "options": "dd-mm-yyyy\nmm-dd-yyyy\nyyyy-mm-dd"
+    },
+    {
+      "fieldname": "appointment_section",
+      "fieldtype": "Section Break",
+      "label": "Appointment Settings"
+    },
+    {
+      "default": "30",
+      "fieldname": "default_appointment_duration",
+      "fieldtype": "Int",
+      "label": "Default Appointment Duration (minutes)"
+    },
+    {
+      "default": "5",
+      "fieldname": "appointment_buffer_time",
+      "fieldtype": "Int",
+      "label": "Buffer Time Between Appointments (minutes)"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "1",
+      "fieldname": "enable_online_booking",
+      "fieldtype": "Check",
+      "label": "Enable Online Booking"
+    },
+    {
+      "default": "0",
+      "fieldname": "auto_confirm_appointments",
+      "fieldtype": "Check",
+      "label": "Auto Confirm Appointments"
+    },
+    {
+      "fieldname": "billing_section",
+      "fieldtype": "Section Break",
+      "label": "Billing Settings"
+    },
+    {
+      "default": "1",
+      "fieldname": "enable_insurance",
+      "fieldtype": "Check",
+      "label": "Enable Insurance Processing"
+    },
+    {
+      "fieldname": "default_tax_template",
+      "fieldtype": "Link",
+      "label": "Default Tax Template",
+      "options": "Sales Taxes and Charges Template"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "1",
+      "fieldname": "auto_create_invoice",
+      "fieldtype": "Check",
+      "label": "Auto Create Invoice After Appointment"
+    },
+    {
+      "fieldname": "notification_section",
+      "fieldtype": "Section Break",
+      "label": "Notification Settings"
+    },
+    {
+      "default": "0",
+      "fieldname": "enable_sms_notifications",
+      "fieldtype": "Check",
+      "label": "Enable SMS Notifications"
+    },
+    {
+      "default": "1",
+      "fieldname": "enable_email_notifications",
+      "fieldtype": "Check",
+      "label": "Enable Email Notifications"
+    },
+    {
+      "fieldname": "column_break_4",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "24",
+      "fieldname": "appointment_reminder_hours",
+      "fieldtype": "Int",
+      "label": "Appointment Reminder (hours before)"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "issingle": 1,
+  "links": [],
+  "modified": "2024-11-26 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Hospital SAAS Settings",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "print": 1,
+      "read": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Healthcare Administrator",
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1
+}

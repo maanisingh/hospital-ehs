@@ -1,0 +1,227 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "format:{hospital}-{department_name}",
+  "creation": "2024-11-26 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "basic_section",
+    "department_name",
+    "department_code",
+    "hospital",
+    "column_break_1",
+    "status",
+    "department_type",
+    "parent_department",
+    "details_section",
+    "description",
+    "column_break_2",
+    "specialization",
+    "location_floor",
+    "location_building",
+    "contact_section",
+    "department_head",
+    "phone_extension",
+    "column_break_3",
+    "email",
+    "capacity_section",
+    "consultation_rooms",
+    "beds_allocated",
+    "column_break_4",
+    "daily_opd_capacity",
+    "operating_hours"
+  ],
+  "fields": [
+    {
+      "fieldname": "basic_section",
+      "fieldtype": "Section Break",
+      "label": "Basic Information"
+    },
+    {
+      "fieldname": "department_name",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Department Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "department_code",
+      "fieldtype": "Data",
+      "in_list_view": 1,
+      "label": "Department Code",
+      "unique": 1
+    },
+    {
+      "fieldname": "hospital",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "in_standard_filter": 1,
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "Active",
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "in_list_view": 1,
+      "label": "Status",
+      "options": "Active\nInactive\nUnder Renovation"
+    },
+    {
+      "fieldname": "department_type",
+      "fieldtype": "Select",
+      "label": "Department Type",
+      "options": "\nClinical\nDiagnostic\nSupport\nAdministrative\nEmergency\nSurgical\nOutpatient\nInpatient"
+    },
+    {
+      "fieldname": "parent_department",
+      "fieldtype": "Link",
+      "label": "Parent Department",
+      "options": "Department"
+    },
+    {
+      "fieldname": "details_section",
+      "fieldtype": "Section Break",
+      "label": "Details"
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Text",
+      "label": "Description"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "specialization",
+      "fieldtype": "Select",
+      "label": "Specialization",
+      "options": "\nGeneral Medicine\nCardiology\nNeurology\nOrthopedics\nPediatrics\nGynecology\nOncology\nDermatology\nOphthalmology\nENT\nDental\nPsychiatry\nRadiology\nPathology\nPhysiotherapy\nEmergency Medicine\nAnesthesiology\nSurgery\nInternal Medicine\nUrology\nNephrology\nGastroenterology\nPulmonology\nEndocrinology\nRheumatology"
+    },
+    {
+      "fieldname": "location_floor",
+      "fieldtype": "Data",
+      "label": "Floor/Level"
+    },
+    {
+      "fieldname": "location_building",
+      "fieldtype": "Data",
+      "label": "Building/Wing"
+    },
+    {
+      "fieldname": "contact_section",
+      "fieldtype": "Section Break",
+      "label": "Contact"
+    },
+    {
+      "fieldname": "department_head",
+      "fieldtype": "Link",
+      "label": "Department Head",
+      "options": "Healthcare Practitioner"
+    },
+    {
+      "fieldname": "phone_extension",
+      "fieldtype": "Data",
+      "label": "Phone Extension"
+    },
+    {
+      "fieldname": "column_break_3",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Department Email",
+      "options": "Email"
+    },
+    {
+      "fieldname": "capacity_section",
+      "fieldtype": "Section Break",
+      "label": "Capacity"
+    },
+    {
+      "default": "0",
+      "fieldname": "consultation_rooms",
+      "fieldtype": "Int",
+      "label": "Consultation Rooms"
+    },
+    {
+      "default": "0",
+      "fieldname": "beds_allocated",
+      "fieldtype": "Int",
+      "label": "Beds Allocated"
+    },
+    {
+      "fieldname": "column_break_4",
+      "fieldtype": "Column Break"
+    },
+    {
+      "default": "0",
+      "fieldname": "daily_opd_capacity",
+      "fieldtype": "Int",
+      "label": "Daily OPD Capacity"
+    },
+    {
+      "fieldname": "operating_hours",
+      "fieldtype": "Data",
+      "label": "Operating Hours"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2024-11-26 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Hospital SAAS",
+  "name": "Department",
+  "naming_rule": "Expression",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "Healthcare Administrator",
+      "share": 1,
+      "write": 1
+    },
+    {
+      "read": 1,
+      "role": "Physician"
+    },
+    {
+      "read": 1,
+      "role": "Nursing User"
+    }
+  ],
+  "quick_entry": 1,
+  "search_fields": "department_name,department_code,hospital",
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "title_field": "department_name",
+  "track_changes": 1
+}
