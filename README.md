@@ -65,78 +65,241 @@ hospital-ehs/
 └── docs/                    # Documentation
 ```
 
+---
+
 ## Development Phases
 
-### Phase 1: Multi-Tenant Infrastructure Setup ✅
-- Docker Compose setup with MariaDB, Redis, ERPNext
-- Custom hospital_saas Frappe app structure
-- Nginx reverse proxy with SSL
-- Multi-tenant configuration
+### Phase 1: Multi-Tenant Infrastructure Setup ✅ COMPLETED
+- [x] Docker Compose setup with MariaDB, Redis, ERPNext
+- [x] Custom hospital_saas Frappe app structure
+- [x] Nginx reverse proxy with SSL
+- [x] Multi-tenant configuration
+- [x] Healthcare module integration
 
-### Phase 2: Core DocTypes & Database Design
-- Hospital/Clinic DocType
-- Department DocType
-- Custom Patient fields
-- Healthcare Practitioner extensions
+### Phase 2: Core DocTypes & Top Navigation UI ✅ COMPLETED
+- [x] Hospital DocType (multi-tenant with code H101, H102)
+- [x] Department DocType
+- [x] Hospital SAAS Settings
+- [x] **Top Navigation Bar** (Patients, OPD, IPD, Pharmacy, Clinical, Radiology, Billing, Setup)
+- [x] Hospital Dashboard with Stats
+- [x] Quick Actions (Register Patient, Generate Token, etc.)
+- [x] Role-based permissions
 
-### Phase 3: Patient Management Module
-- Patient registration
-- Medical history
-- Document uploads
-- Patient portal
+### Phase 3: OPD Module ✅ COMPLETED
+- [x] OPD Token DocType with daily auto-numbering
+- [x] OPD Queue Display (real-time)
+- [x] Patient Appointment integration
+- [x] Patient Encounter (Consultation)
+- [x] Token status workflow (Waiting → Called → In Progress → Completed)
+- [x] Realtime queue updates
 
-### Phase 4: Appointment System
-- Online booking
-- Calendar management
-- SMS/Email reminders
-- Queue management
+### Phase 4: IPD Module ✅ COMPLETED
+- [x] IPD Admission DocType
+- [x] Bed/Ward management (Healthcare Service Unit)
+- [x] Admission workflow
+- [x] Integration with ERPNext Inpatient Record
 
-### Phase 5: Billing Integration
-- Invoice generation
-- Payment processing
-- Insurance claims
-- Multi-currency support
+### Phase 5: Radiology Module ✅ COMPLETED
+- [x] Radiology Order DocType
+- [x] Radiology Result DocType
+- [x] Radiology Examination Type
+- [x] Radiology Image attachments
+- [x] Radiology Queue Display
+- [x] Radiology Reports
 
-### Phase 6: Inventory Management
-- Medicine stock
-- Equipment tracking
-- Auto-reorder
-- Expiry alerts
+### Phase 6: Pharmacy Module ✅ COMPLETED
+- [x] Pharmacy DocType
+- [x] Pharmacy Prescription DocType
+- [x] Medication Dispensing
+- [x] Prescription Items
+- [x] Pharmacy Queue Display
+- [x] Integration with ERPNext Stock
 
-### Phase 7: Reports & Dashboard
-- Real-time analytics
-- Custom reports
-- Data export
-- Scheduled reports
+---
 
-### Phase 8: API Development
-- REST API endpoints
-- Webhook support
-- Third-party integrations
-- API documentation
+### Phase 7: Hospital DocType Enhancement 🔶 IN PROGRESS
+**Add missing fields per original requirements:**
 
-### Phase 9: Mobile Responsive UI
-- Responsive design
-- PWA support
-- Mobile-optimized workflows
+- [ ] Owner Information Section
+  - Owner Name
+  - Owner Email
+  - Owner Mobile Number
+- [ ] Social Media Section
+  - Facebook URL
+  - Instagram URL
+  - YouTube URL
+  - Twitter URL
+  - LinkedIn URL
+- [ ] Branding Section
+  - Dashboard Footer Text
+  - Helpline Number
+- [ ] Organisation Code auto-generation (H101, H102, H103...)
 
-### Phase 10: Testing & QA
-- Unit tests
-- Integration tests
-- Performance testing
-- Security audit
+### Phase 8: Super Admin Dashboard 🔶 PENDING
+**Central management for all hospitals:**
 
-### Phase 11: Documentation
-- User manual
-- API documentation
-- Deployment guide
-- Video tutorials
+- [ ] Super Admin Workspace
+- [ ] All Hospitals Overview (list with status)
+- [ ] Create New Hospital Wizard
+- [ ] Hospital Analytics (patients, revenue per hospital)
+- [ ] Subscription Management
+  - Payment status tracking
+  - Expiry alerts
+  - Plan upgrades
+- [ ] System-wide Reports
 
-### Phase 12: Production Deployment
-- Production optimization
-- Backup strategy
-- Monitoring setup
-- Go-live checklist
+### Phase 9: User Management per Hospital 🔶 PENDING
+**Role-based user creation linked to hospital:**
+
+- [ ] User creation form with hospital selection
+- [ ] Roles per hospital:
+  - Hospital Administrator
+  - Reception
+  - Doctor
+  - Nurse
+  - Lab Technician
+  - Radiology Technician
+  - Pharmacist
+  - Billing/Accounts
+  - Staff
+- [ ] User-Hospital mapping
+- [ ] Permission isolation (users see only their hospital data)
+
+### Phase 10: Lab/Pathology Module 🔶 PENDING
+**Complete lab workflow:**
+
+- [ ] Lab Test Templates configuration
+- [ ] Lab Test Order from Doctor Consultation
+- [ ] Sample Collection tracking
+- [ ] Lab Results Entry form
+- [ ] Lab Report Print format
+- [ ] Lab Queue Display
+- [ ] Lab → Billing integration (payment check before test)
+
+### Phase 11: Billing & Payment Workflow 🔶 PENDING
+**Payment status integration:**
+
+- [ ] OPD Billing (consultation charges)
+- [ ] Lab Test Billing
+- [ ] Radiology Billing
+- [ ] Pharmacy Billing
+- [ ] Payment Status on all documents (Paid/Unpaid)
+- [ ] Payment Receipt Print with status
+- [ ] Outstanding Payments Dashboard
+- [ ] Payment Mode tracking (Cash/Card/UPI)
+
+### Phase 12: Doctor Consultation Flow 🔶 PENDING
+**Complete OPD consultation workflow:**
+
+- [ ] Symptoms entry
+- [ ] Diagnosis entry
+- [ ] Vitals recording
+- [ ] Lab Test ordering (auto-show in Lab module)
+- [ ] Radiology ordering
+- [ ] Final Prescription generation
+- [ ] Prescription → Pharmacy Queue
+
+### Phase 13: Accounts Module 🔶 PENDING
+**Financial reporting:**
+
+- [ ] Daily Revenue Report
+- [ ] Monthly Revenue Report
+- [ ] Department-wise Revenue
+- [ ] Doctor-wise Revenue
+- [ ] Expense Tracking
+- [ ] Profit/Loss Summary
+- [ ] Outstanding Collections
+
+### Phase 14: Inventory & Expiry Management 🔶 PENDING
+**Medicine stock with alerts:**
+
+- [ ] Medicine Stock Dashboard
+- [ ] Expiry Date tracking
+- [ ] Expiry Alerts (30/15/7 days before)
+- [ ] Low Stock Alerts
+- [ ] Auto-reorder suggestions
+- [ ] Stock Adjustment
+- [ ] Purchase Order integration
+
+### Phase 15: Public Patient Portal 🔶 PENDING
+**Online booking for patients:**
+
+- [ ] Hospital Selection Page (list all active hospitals)
+- [ ] Online OPD Booking Form
+- [ ] Appointment Confirmation (SMS/Email)
+- [ ] My Appointments view
+- [ ] Queue Status check
+- [ ] Lab Reports download
+- [ ] Radiology Reports download
+
+### Phase 16: Reports & Analytics 🔶 PENDING
+**Comprehensive reporting:**
+
+- [ ] Patient Reports (registrations, visits)
+- [ ] OPD Reports (daily, monthly)
+- [ ] IPD Reports (admissions, discharges)
+- [ ] Lab Reports (tests conducted)
+- [ ] Radiology Reports
+- [ ] Revenue Reports
+- [ ] Custom Report Builder
+
+### Phase 17: Notifications & Reminders 🔶 PENDING
+**SMS/Email integration:**
+
+- [ ] Appointment Reminders
+- [ ] OPD Token SMS
+- [ ] Lab Report Ready notification
+- [ ] Payment Due reminders
+- [ ] Subscription Expiry alerts (for Super Admin)
+
+### Phase 18: Testing & QA 🔶 PENDING
+- [ ] Unit tests for custom DocTypes
+- [ ] Integration tests for workflows
+- [ ] Performance testing
+- [ ] Security audit
+- [ ] Multi-tenant isolation testing
+
+### Phase 19: Documentation 🔶 PENDING
+- [ ] User Manual (PDF)
+- [ ] Admin Guide
+- [ ] API Documentation
+- [ ] Video Tutorials
+- [ ] Deployment Guide
+
+### Phase 20: Production Optimization 🔶 PENDING
+- [ ] Performance tuning
+- [ ] Backup automation
+- [ ] Monitoring setup (uptime, errors)
+- [ ] SSL auto-renewal
+- [ ] Go-live checklist
+
+---
+
+## Module Summary
+
+| Module | Status | DocTypes |
+|--------|--------|----------|
+| Infrastructure | ✅ Done | Docker, Nginx, SSL |
+| Hospital (Multi-tenant) | ✅ Done | Hospital, Department, Settings |
+| OPD | ✅ Done | OPD Token, Queue Display |
+| IPD | ✅ Done | IPD Admission |
+| Radiology | ✅ Done | Order, Result, Exam Type, Images, Queue |
+| Pharmacy | ✅ Done | Pharmacy, Prescription, Dispensing, Queue |
+| Top Navigation UI | ✅ Done | Custom navbar with dropdowns |
+| Dashboard | ✅ Done | Stats, Quick Actions, Recent Patients |
+| Hospital Enhancement | 🔶 Next | Owner, Social Media, Footer |
+| Super Admin | 🔶 Pending | Multi-hospital management |
+| User Management | 🔶 Pending | Role-based per hospital |
+| Lab/Pathology | 🔶 Pending | Tests, Results, Queue |
+| Billing Workflow | 🔶 Pending | Payment status integration |
+| Doctor Flow | 🔶 Pending | Symptoms, Diagnosis, Prescription |
+| Accounts | 🔶 Pending | Revenue, Expenses, P&L |
+| Inventory | 🔶 Pending | Expiry alerts, Low stock |
+| Patient Portal | 🔶 Pending | Online booking |
+| Reports | 🔶 Pending | Analytics dashboard |
+| Notifications | 🔶 Pending | SMS/Email alerts |
+
+---
 
 ## Contributing
 
