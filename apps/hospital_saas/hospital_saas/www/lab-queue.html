@@ -1,0 +1,389 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Lab Queue Display{% endblock %}
+
+{% block head_include %}
+<style>
+    :root {
+        --primary-color: #3498db;
+        --success-color: #27ae60;
+        --warning-color: #f39c12;
+        --danger-color: #e74c3c;
+        --info-color: #17a2b8;
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .queue-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .hospital-header {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 20px 30px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .hospital-name {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 0;
+    }
+
+    .hospital-subtitle {
+        color: #7f8c8d;
+        margin: 5px 0 0 0;
+    }
+
+    .current-time {
+        font-size: 2em;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .queue-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .stat-number {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: #7f8c8d;
+        font-size: 0.9em;
+        text-transform: uppercase;
+    }
+
+    .stat-waiting .stat-number { color: var(--warning-color); }
+    .stat-collection .stat-number { color: var(--info-color); }
+    .stat-processing .stat-number { color: var(--primary-color); }
+    .stat-completed .stat-number { color: var(--success-color); }
+
+    .queue-section {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .section-title {
+        font-size: 1.3em;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #eee;
+    }
+
+    .queue-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .queue-item {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .queue-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .queue-item.waiting { border-left-color: var(--warning-color); }
+    .queue-item.collection { border-left-color: var(--info-color); background: #e3f2fd; }
+    .queue-item.processing { border-left-color: var(--primary-color); background: #fff3e0; }
+    .queue-item.completed { border-left-color: var(--success-color); background: #e8f5e9; }
+
+    .queue-number {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .patient-name {
+        font-size: 1em;
+        color: #34495e;
+        margin: 5px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .test-name {
+        font-size: 0.85em;
+        color: #7f8c8d;
+        margin-top: 5px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75em;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-top: 8px;
+    }
+
+    .status-waiting { background: #fff3cd; color: #856404; }
+    .status-collection { background: #cce5ff; color: #004085; }
+    .status-processing { background: #d4edda; color: #155724; }
+    .status-completed { background: #d1ecf1; color: #0c5460; }
+
+    .now-serving {
+        background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 40px rgba(39, 174, 96, 0.3);
+    }
+
+    .now-serving-label {
+        font-size: 1.2em;
+        opacity: 0.9;
+        margin-bottom: 10px;
+    }
+
+    .now-serving-number {
+        font-size: 4em;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .now-serving-patient {
+        font-size: 1.3em;
+        margin-top: 10px;
+    }
+
+    .now-serving-test {
+        font-size: 1em;
+        opacity: 0.9;
+        margin-top: 5px;
+    }
+
+    .counter-info {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 15px;
+    }
+
+    .counter-item {
+        background: rgba(255,255,255,0.2);
+        padding: 8px 20px;
+        border-radius: 20px;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #7f8c8d;
+        padding: 40px;
+        font-size: 1.1em;
+    }
+
+    .footer-info {
+        text-align: center;
+        color: rgba(255,255,255,0.8);
+        padding: 20px;
+        font-size: 0.9em;
+    }
+
+    @media (max-width: 768px) {
+        .queue-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .hospital-header {
+            flex-direction: column;
+            text-align: center;
+        }
+        .current-time {
+            margin-top: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div class="queue-container">
+    <!-- Hospital Header -->
+    <div class="hospital-header">
+        <div>
+            <h1 class="hospital-name">{{ hospital_name or "Hospital" }}</h1>
+            <p class="hospital-subtitle">Lab Queue Display</p>
+        </div>
+        <div class="current-time" id="currentTime">--:--:--</div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="queue-stats">
+        <div class="stat-card stat-waiting">
+            <div class="stat-number" id="waitingCount">0</div>
+            <div class="stat-label">Waiting</div>
+        </div>
+        <div class="stat-card stat-collection">
+            <div class="stat-number" id="collectionCount">0</div>
+            <div class="stat-label">Sample Collection</div>
+        </div>
+        <div class="stat-card stat-processing">
+            <div class="stat-number" id="processingCount">0</div>
+            <div class="stat-label">Processing</div>
+        </div>
+        <div class="stat-card stat-completed">
+            <div class="stat-number" id="completedCount">0</div>
+            <div class="stat-label">Completed Today</div>
+        </div>
+    </div>
+
+    <!-- Now Serving -->
+    <div class="now-serving" id="nowServing" style="display: none;">
+        <div class="now-serving-label">NOW AT SAMPLE COLLECTION</div>
+        <div class="now-serving-number" id="currentNumber">--</div>
+        <div class="now-serving-patient" id="currentPatient">--</div>
+        <div class="now-serving-test" id="currentTest">--</div>
+        <div class="counter-info">
+            <div class="counter-item">Counter: <strong id="currentCounter">1</strong></div>
+        </div>
+    </div>
+
+    <!-- Waiting Queue -->
+    <div class="queue-section">
+        <h2 class="section-title">🔬 Waiting for Sample Collection</h2>
+        <div class="queue-grid" id="waitingQueue">
+            <div class="empty-message">No patients waiting</div>
+        </div>
+    </div>
+
+    <!-- Processing Queue -->
+    <div class="queue-section">
+        <h2 class="section-title">⚗️ Tests in Progress</h2>
+        <div class="queue-grid" id="processingQueue">
+            <div class="empty-message">No tests in progress</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-info">
+        <p>{{ footer_text or "Hospital Management System" }}</p>
+        <p>Queue updates automatically every 10 seconds</p>
+    </div>
+</div>
+
+<script>
+    // Update current time
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        });
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Fetch and update queue data
+    function updateQueue() {
+        const hospital = "{{ hospital or '' }}";
+
+        frappe.call({
+            method: 'hospital_saas.api.lab.get_lab_queue',
+            args: { hospital: hospital },
+            callback: function(r) {
+                if (r.message) {
+                    renderQueue(r.message);
+                }
+            }
+        });
+    }
+
+    function renderQueue(data) {
+        // Update stats
+        document.getElementById('waitingCount').textContent = data.waiting_count || 0;
+        document.getElementById('collectionCount').textContent = data.collection_count || 0;
+        document.getElementById('processingCount').textContent = data.processing_count || 0;
+        document.getElementById('completedCount').textContent = data.completed_count || 0;
+
+        // Update now serving
+        if (data.current) {
+            document.getElementById('nowServing').style.display = 'block';
+            document.getElementById('currentNumber').textContent = data.current.queue_number || '--';
+            document.getElementById('currentPatient').textContent = data.current.patient_name || '--';
+            document.getElementById('currentTest').textContent = data.current.test_name || '--';
+        } else {
+            document.getElementById('nowServing').style.display = 'none';
+        }
+
+        // Update waiting queue
+        const waitingQueue = document.getElementById('waitingQueue');
+        if (data.waiting && data.waiting.length > 0) {
+            waitingQueue.innerHTML = data.waiting.map(item => `
+                <div class="queue-item waiting">
+                    <div class="queue-number">${item.queue_number || item.name}</div>
+                    <div class="patient-name">${item.patient_name}</div>
+                    <div class="test-name">${item.test_name || item.template}</div>
+                    <span class="status-badge status-waiting">Waiting</span>
+                </div>
+            `).join('');
+        } else {
+            waitingQueue.innerHTML = '<div class="empty-message">No patients waiting</div>';
+        }
+
+        // Update processing queue
+        const processingQueue = document.getElementById('processingQueue');
+        if (data.processing && data.processing.length > 0) {
+            processingQueue.innerHTML = data.processing.map(item => `
+                <div class="queue-item processing">
+                    <div class="queue-number">${item.queue_number || item.name}</div>
+                    <div class="patient-name">${item.patient_name}</div>
+                    <div class="test-name">${item.test_name || item.template}</div>
+                    <span class="status-badge status-processing">Processing</span>
+                </div>
+            `).join('');
+        } else {
+            processingQueue.innerHTML = '<div class="empty-message">No tests in progress</div>';
+        }
+    }
+
+    // Initial load and refresh every 10 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        updateQueue();
+        setInterval(updateQueue, 10000);
+    });
+</script>
+{% endblock %}

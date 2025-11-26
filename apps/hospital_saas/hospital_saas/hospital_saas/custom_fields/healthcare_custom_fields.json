@@ -1,0 +1,309 @@
+{
+  "custom_fields": [
+    {
+      "dt": "Patient",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient_name",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Patient Appointment",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Patient Encounter",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Patient Encounter",
+      "fieldname": "custom_opd_token",
+      "fieldtype": "Link",
+      "insert_after": "custom_hospital",
+      "label": "OPD Token",
+      "options": "OPD Token"
+    },
+    {
+      "dt": "Patient Encounter",
+      "fieldname": "custom_payment_status",
+      "fieldtype": "Select",
+      "insert_after": "custom_opd_token",
+      "label": "Payment Status",
+      "options": "\nPending\nPaid\nPartial\nWaived",
+      "default": "Pending"
+    },
+    {
+      "dt": "Healthcare Practitioner",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "practitioner_name",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Healthcare Practitioner",
+      "fieldname": "custom_consultation_fee",
+      "fieldtype": "Currency",
+      "insert_after": "custom_hospital",
+      "label": "Consultation Fee",
+      "default": "0"
+    },
+    {
+      "dt": "Lab Test",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Lab Test",
+      "fieldname": "custom_queue_number",
+      "fieldtype": "Int",
+      "insert_after": "custom_hospital",
+      "label": "Queue Number",
+      "read_only": 1
+    },
+    {
+      "dt": "Lab Test",
+      "fieldname": "custom_queue_status",
+      "fieldtype": "Select",
+      "insert_after": "custom_queue_number",
+      "label": "Queue Status",
+      "options": "\nWaiting\nSample Collection\nProcessing\nCompleted",
+      "default": "Waiting"
+    },
+    {
+      "dt": "Lab Test",
+      "fieldname": "custom_payment_status",
+      "fieldtype": "Select",
+      "insert_after": "custom_queue_status",
+      "label": "Payment Status",
+      "options": "\nPending\nPaid\nPartial\nWaived",
+      "default": "Pending"
+    },
+    {
+      "dt": "Lab Test Template",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "lab_test_name",
+      "label": "Hospital",
+      "options": "Hospital",
+      "description": "Leave blank for global template"
+    },
+    {
+      "dt": "Lab Test Template",
+      "fieldname": "custom_test_fee",
+      "fieldtype": "Currency",
+      "insert_after": "custom_hospital",
+      "label": "Test Fee",
+      "default": "0"
+    },
+    {
+      "dt": "Clinical Procedure",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Clinical Procedure",
+      "fieldname": "custom_payment_status",
+      "fieldtype": "Select",
+      "insert_after": "custom_hospital",
+      "label": "Payment Status",
+      "options": "\nPending\nPaid\nPartial\nWaived",
+      "default": "Pending"
+    },
+    {
+      "dt": "Inpatient Record",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Vital Signs",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Healthcare Service Unit",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "healthcare_service_unit_name",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Medical Department",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "department",
+      "label": "Hospital",
+      "options": "Hospital",
+      "description": "Leave blank for global department"
+    },
+    {
+      "dt": "Sales Invoice",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "customer",
+      "label": "Hospital",
+      "options": "Hospital",
+      "in_list_view": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Sales Invoice",
+      "fieldname": "custom_patient",
+      "fieldtype": "Link",
+      "insert_after": "custom_hospital",
+      "label": "Patient",
+      "options": "Patient"
+    },
+    {
+      "dt": "Sales Invoice",
+      "fieldname": "custom_service_type",
+      "fieldtype": "Select",
+      "insert_after": "custom_patient",
+      "label": "Service Type",
+      "options": "\nOPD Consultation\nLab Test\nRadiology\nPharmacy\nIPD\nProcedure\nOther"
+    },
+    {
+      "dt": "Sales Invoice",
+      "fieldname": "custom_reference_doctype",
+      "fieldtype": "Link",
+      "insert_after": "custom_service_type",
+      "label": "Reference Type",
+      "options": "DocType"
+    },
+    {
+      "dt": "Sales Invoice",
+      "fieldname": "custom_reference_name",
+      "fieldtype": "Dynamic Link",
+      "insert_after": "custom_reference_doctype",
+      "label": "Reference Name",
+      "options": "custom_reference_doctype"
+    },
+    {
+      "dt": "Item",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "item_name",
+      "label": "Hospital",
+      "options": "Hospital",
+      "description": "Leave blank for global item"
+    },
+    {
+      "dt": "Item",
+      "fieldname": "custom_is_medicine",
+      "fieldtype": "Check",
+      "insert_after": "custom_hospital",
+      "label": "Is Medicine",
+      "default": "0"
+    },
+    {
+      "dt": "Item",
+      "fieldname": "custom_generic_name",
+      "fieldtype": "Data",
+      "insert_after": "custom_is_medicine",
+      "label": "Generic Name",
+      "depends_on": "eval:doc.custom_is_medicine"
+    },
+    {
+      "dt": "Item",
+      "fieldname": "custom_manufacturer",
+      "fieldtype": "Data",
+      "insert_after": "custom_generic_name",
+      "label": "Manufacturer",
+      "depends_on": "eval:doc.custom_is_medicine"
+    },
+    {
+      "dt": "Batch",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "batch_id",
+      "label": "Hospital",
+      "options": "Hospital"
+    },
+    {
+      "dt": "Stock Entry",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "stock_entry_type",
+      "label": "Hospital",
+      "options": "Hospital",
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Purchase Receipt",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "supplier",
+      "label": "Hospital",
+      "options": "Hospital",
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Therapy Session",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_standard_filter": 1
+    },
+    {
+      "dt": "Sample Collection",
+      "fieldname": "custom_hospital",
+      "fieldtype": "Link",
+      "insert_after": "patient",
+      "label": "Hospital",
+      "options": "Hospital",
+      "reqd": 1,
+      "in_standard_filter": 1
+    }
+  ]
+}

@@ -148,6 +148,7 @@ def hospital_query(user):
     """
     Generic permission query for hospital-scoped doctypes.
     Used for OPD Token, IPD Admission, and other hospital-specific documents.
+    Uses the `hospital` field.
     """
     try:
         if not user or user == "Administrator":
@@ -161,6 +162,30 @@ def hospital_query(user):
         if hospital:
             escaped = frappe.db.escape(hospital)
             return f"(`hospital` = {escaped} OR `hospital` IS NULL OR `hospital` = '')"
+
+        return ""
+    except Exception:
+        return ""
+
+
+def custom_hospital_query(user):
+    """
+    Permission query for ERPNext DocTypes with custom_hospital field.
+    Used for Patient, Patient Encounter, Lab Test, Sales Invoice, etc.
+    Uses the `custom_hospital` field.
+    """
+    try:
+        if not user or user == "Administrator":
+            return ""
+
+        if "System Manager" in frappe.get_roles(user):
+            return ""
+
+        hospital = get_user_hospital()
+
+        if hospital:
+            escaped = frappe.db.escape(hospital)
+            return f"(`custom_hospital` = {escaped} OR `custom_hospital` IS NULL OR `custom_hospital` = '')"
 
         return ""
     except Exception:

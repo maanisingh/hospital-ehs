@@ -45,6 +45,8 @@ website_route_rules = [
     {"from_route": "/radiology-queue/<hospital>", "to_route": "radiology-queue"},
     {"from_route": "/pharmacy-queue", "to_route": "pharmacy-queue"},
     {"from_route": "/pharmacy-queue/<hospital>", "to_route": "pharmacy-queue"},
+    {"from_route": "/lab-queue", "to_route": "lab-queue"},
+    {"from_route": "/lab-queue/<hospital>", "to_route": "lab-queue"},
     {"from_route": "/patient-portal", "to_route": "patient_portal"},
     {"from_route": "/book-appointment/<hospital>", "to_route": "book_appointment"},
     {"from_route": "/hospital/<path:app_path>", "to_route": "hospital"},
@@ -137,15 +139,32 @@ scheduler_events = {
 # ============================================
 
 permission_query_conditions = {
+    # Core Healthcare DocTypes
     "Patient": "hospital_saas.permissions.patient_query",
     "Patient Appointment": "hospital_saas.permissions.appointment_query",
+    "Patient Encounter": "hospital_saas.permissions.custom_hospital_query",
+    "Healthcare Practitioner": "hospital_saas.permissions.custom_hospital_query",
+    "Vital Signs": "hospital_saas.permissions.custom_hospital_query",
+    "Clinical Procedure": "hospital_saas.permissions.custom_hospital_query",
+    "Inpatient Record": "hospital_saas.permissions.custom_hospital_query",
+    "Healthcare Service Unit": "hospital_saas.permissions.custom_hospital_query",
+    "Sample Collection": "hospital_saas.permissions.custom_hospital_query",
+    "Therapy Session": "hospital_saas.permissions.custom_hospital_query",
+
+    # Lab Module
+    "Lab Test": "hospital_saas.permissions.custom_hospital_query",
+
+    # Custom Hospital SAAS DocTypes
     "OPD Token": "hospital_saas.permissions.hospital_query",
     "IPD Admission": "hospital_saas.permissions.hospital_query",
-    "Lab Test": "hospital_saas.permissions.hospital_query",
-    "Sales Invoice": "hospital_saas.permissions.hospital_query",
-    "Healthcare Practitioner": "hospital_saas.permissions.hospital_query",
     "Radiology Order": "hospital_saas.permissions.hospital_query",
     "Radiology Result": "hospital_saas.permissions.hospital_query",
+    "Pharmacy Prescription": "hospital_saas.permissions.hospital_query",
+
+    # Accounts & Stock
+    "Sales Invoice": "hospital_saas.permissions.custom_hospital_query",
+    "Stock Entry": "hospital_saas.permissions.custom_hospital_query",
+    "Purchase Receipt": "hospital_saas.permissions.custom_hospital_query",
 }
 
 # ============================================
