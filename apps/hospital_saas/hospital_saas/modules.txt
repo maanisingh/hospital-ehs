@@ -1,0 +1,8 @@
+Hospital SAAS
+Tenant Management
+Patient Management
+Appointment System
+Billing System
+Inventory Management
+Reports
+Settings

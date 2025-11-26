@@ -1,0 +1,16 @@
+[project]
+name = "hospital_saas"
+authors = [
+    { name = "Alexandra Tech Lab", email = "maanindersinghsidhu@gmail.com" }
+]
+description = "Multi-Tenant Hospital Management SAAS Platform"
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "hospital_saas"

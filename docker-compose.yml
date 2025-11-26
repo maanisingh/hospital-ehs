@@ -1,0 +1,102 @@
+services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: hospital-mariadb
+    restart: unless-stopped
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+      - --skip-innodb-read-only-compressed
+    environment:
+      MYSQL_ROOT_PASSWORD: hospital_root_password_2024
+      MYSQL_DATABASE: hospital_saas
+      MYSQL_USER: hospital_user
+      MYSQL_PASSWORD: hospital_db_password_2024
+    volumes:
+      - hospital-mariadb-data:/var/lib/mysql
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-phospital_root_password_2024"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis-cache:
+    image: redis:7-alpine
+    container_name: hospital-redis-cache
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - hospital-redis-cache:/data
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis-queue:
+    image: redis:7-alpine
+    container_name: hospital-redis-queue
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy noeviction
+    volumes:
+      - hospital-redis-queue:/data
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  erpnext:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hospital-erpnext
+    restart: unless-stopped
+    ports:
+      - "8380:8000"
+      - "9380:9000"
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - REDIS_CACHE=redis://redis-cache:6379
+      - REDIS_QUEUE=redis://redis-queue:6379
+      - SITE_NAME=hospital.local
+      - ADMIN_PASSWORD=HospitalAdmin@2024
+      - FRAPPE_SOCKETIO_PORT=9000
+    volumes:
+      - hospital-sites:/home/frappe/frappe-bench/sites
+      - hospital-logs:/home/frappe/frappe-bench/logs
+      - ./apps/hospital_saas:/home/frappe/frappe-bench/apps/hospital_saas
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+      redis-queue:
+        condition: service_healthy
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/method/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  hospital-mariadb-data:
+  hospital-redis-cache:
+  hospital-redis-queue:
+  hospital-sites:
+  hospital-logs:
+
+networks:
+  hospital-network:
+    driver: bridge

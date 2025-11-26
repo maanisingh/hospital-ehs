@@ -1,0 +1,18 @@
+{
+  "db_host": "mariadb",
+  "redis_cache": "redis://redis-cache:6379",
+  "redis_queue": "redis://redis-queue:6379",
+  "redis_socketio": "redis://redis-queue:6379",
+  "socketio_port": 9000,
+  "webserver_port": 8000,
+  "serve_default_site": true,
+  "frappe_user": "frappe",
+  "auto_update": false,
+  "update_bench_on_update": false,
+  "shallow_clone": true,
+  "dns_multitenant": true,
+  "host_name": "hospital.alexandratechlab.com",
+  "developer_mode": 0,
+  "maintenance_mode": 0,
+  "pause_scheduler": 0
+}

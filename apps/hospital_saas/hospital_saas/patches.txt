@@ -1,0 +1,5 @@
+[pre_model_sync]
+# Patches to run before model sync
+
+[post_model_sync]
+# Patches to run after model sync
